@@ -7,7 +7,7 @@ type DialogPropsType = {
     id: string
 }
 type MessagePropsType = {
-    text: string
+    message: string
 }
 const DialogItem = (props: DialogPropsType) => {
     return (
@@ -17,9 +17,9 @@ const DialogItem = (props: DialogPropsType) => {
     )
 }
 const Message = (props: MessagePropsType) => {
-    return  <div className={s.message}>{props.text}</div>
+    return  <div className={s.message}>{props.message}</div>
 }
-//test commit
+
 const Dialogs = () => {
     return (
         <div className={s.dialogs}>
@@ -33,12 +33,12 @@ const Dialogs = () => {
                 <DialogItem name='Natalia' id='7' />
             </div>
             <div className={s.messages}>
-               < Message text='Hi!'/>
-               < Message text='How are you?'/>
-               < Message text='Hi!'/>
-               < Message text='Hi!'/>
-               < Message text='Hi!'/>
-               < Message text='Hi!'/>
+               < Message message='Hi!'/>
+               < Message message='How are you?'/>
+               < Message message='Hi!'/>
+               < Message message='Hi!'/>
+               < Message message='Hi!'/>
+               < Message message='Hi!'/>
             </div>
         </div>
     )
