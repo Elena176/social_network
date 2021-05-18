@@ -2,18 +2,16 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import {DialogsType, MessagesPropsType} from '../../index';
+import {DialogsPageType} from '../../redux/state';
 
-type ItemPropsType = {
-    dialogs: Array<DialogsType>,
-    messages: Array<MessagesPropsType>
+type PropsType = {
+    dialogsPage: DialogsPageType
 }
 
-const Dialogs: React.FC<ItemPropsType> = (props) => {
+const Dialogs: React.FC<PropsType> = (props) => {
 
-    // eslint-disable-next-line react/jsx-no-undef
-    let dialogsElements = props.appState.dialogs.map( d => <DialogItem name={d.name} id={d.id} />)
-    let messagesElements = props.messages.map( m => <Message message={m.message} />)
+    let dialogsElements = props.dialogsPage.dialogs.map( d => <DialogItem name={d.name} id={d.id} />)
+    let messagesElements = props.dialogsPage.messages.map( m => <Message message={m.message} />)
 
     return (
         <div className={s.dialogs}>

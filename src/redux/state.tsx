@@ -1,4 +1,4 @@
-type DialogsType = {
+export type DialogsType = {
     id: number,
     name: string
 }
@@ -8,23 +8,23 @@ type MessagesType = {
     message: string
 }
 
-type PostsType = {
+export type PostsType = {
     id: number,
     message: string,
     likeValue: number
 }
 
-type profilePageType = {
+export type ProfilePageType = {
     posts: Array<PostsType>
 }
 
-type dialogsPageType = {
+export type DialogsPageType = {
     dialogs: Array<DialogsType>,
     messages: Array<MessagesType>
 }
 export type StateType = {
-    profilePage: profilePageType,
-    dialogsPage: dialogsPageType
+    profilePage: ProfilePageType,
+    dialogsPage: DialogsPageType
 }
 
 let state: StateType = {
