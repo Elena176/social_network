@@ -1,12 +1,12 @@
 import React from 'react';
 import s from './Post.module.css';
 
-type PostPropsType = {
+type PostType = {
     message: string
     likeValue: number
 }
 
-function Post(props: PostPropsType) {
+const Post: React.FC<PostType> = (props) => {
     return (
         <div className={s.item}>
             <img

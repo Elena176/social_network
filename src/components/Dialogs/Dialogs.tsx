@@ -2,32 +2,18 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
+import {DialogsType, MessagesPropsType} from '../../index';
 
+type ItemPropsType = {
+    dialogs: Array<DialogsType>,
+    messages: Array<MessagesPropsType>
+}
 
-const Dialogs = () => {
-    let dialogsData = [
-        {id:1, name:'Elena'},
-        {id:2, name:'Denis'},
-        {id:3, name:'Anastasia'},
-        {id:4, name:'Danya'},
-        {id:5, name: 'Sveta'},
-        {id:6, name: 'Nikolay'},
-        {id:7, name: 'Natalia'}
-    ]
-
-    let messages = [
-        {id:1, message: 'Hi!'},
-        {id:2, message: 'How are you?'},
-        {id:3, message: 'Hi!'},
-        {id:4, message: 'Hi!'},
-        {id:5, message: 'Hi!'},
-        {id:6, message: 'Hi!'},
-        {id:7, message: 'Hi!'}
-    ]
+const Dialogs: React.FC<ItemPropsType> = (props) => {
 
     // eslint-disable-next-line react/jsx-no-undef
-    let dialogsElements = dialogsData.map( d => <DialogItem name={d.name} id={d.id} />)
-    let messagesElements = messages.map( m => <Message message={m.message} />)
+    let dialogsElements = props.appState.dialogs.map( d => <DialogItem name={d.name} id={d.id} />)
+    let messagesElements = props.messages.map( m => <Message message={m.message} />)
 
     return (
         <div className={s.dialogs}>
