@@ -1,29 +1,41 @@
 import React from 'react';
-import {PostsType} from '../../../redux/state';
+import {newPostUpdate, PostsType} from '../../../redux/state';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 
 
 type MyPostsType = {
     posts: Array<PostsType>
-    addPost: (postMessage: string) => void
+    newPostText: string
+    addPost: () => void
+    newPostUpdate: (newText: string) => void
 }
 
 const MyPosts: React.FC<MyPostsType> = (props) => {
 
-    let postsElement = props.posts.map(p => <Post message={p.message} likeValue={p.likeValue}/>)
+    const postsElement = props.posts.map(p => <Post message={p.message} likeValue={p.likeValue}/>);
 
-    let newPostElement = React.createRef<HTMLTextAreaElement>();
-    let addPost = () => {
-        if (newPostElement.current)
-        props.addPost(newPostElement.current.value)
+    const newPostElement = React.createRef<HTMLTextAreaElement>();
+    const addPost = () => {
+        if (newPostElement.current) {
+            props.addPost();
+        }
     }
+
+    const onPostChange = () => {
+        if (newPostElement.current) {
+            props.newPostUpdate(newPostElement.current.value);
+        }
+    }
+
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
             <div>
                 <div>
-                    <textarea ref={newPostElement}></textarea>
+                    <textarea onChange={onPostChange}
+                              ref={newPostElement}
+                              value={props.newPostText}/>
                 </div>
                 <div>
                     <button onClick={addPost}>Add post</button>

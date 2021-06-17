@@ -3,18 +3,18 @@ import './App.css';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
 import Dialogs from './components/Dialogs/Dialogs';
-// import s from './components/Dialogs/Dialogs.module.css';
 import {Route} from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import Profile from './components/Profile/Profile';
-import {StateType} from './redux/state';
+import {newPostUpdate, StateType} from './redux/state';
 
 
 type AppPropsType = {
     state: StateType
-    addPost: (postMessage: string) => void
+    addPost: () => void
+    newPostUpdate: (newText: string) => void
 }
 
 const App: React.FC<AppPropsType> = (props) => {
@@ -27,6 +27,7 @@ const App: React.FC<AppPropsType> = (props) => {
                            render={ () => <Profile
                                profilePage={props.state.profilePage}
                                addPost={props.addPost}
+                               newPostUpdate={props.newPostUpdate}
                            />}/>
                     <Route path='/dialogs'
                            render={ () => <Dialogs dialogsPage={props.state.dialogsPage} />}/>
