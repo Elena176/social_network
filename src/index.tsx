@@ -12,8 +12,8 @@ export const renderTree = () => {
         <React.StrictMode>
             <BrowserRouter>
                 <App store={store}
-                     addPost={store.addPost}
-                     newPostUpdate={store.newPostUpdate}/>
+                     dispatch={store.dispatch}
+                />
             </BrowserRouter>
         </React.StrictMode>,
         document.getElementById('root')

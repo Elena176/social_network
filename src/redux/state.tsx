@@ -29,69 +29,83 @@ export type StateType = {
     dialogsPage: DialogsPageType
 }
 
+type AddPostActionType = {
+    type: 'ADD-POST'
+}
+
+type newPostUpdateActionType = {
+    type: 'NEW-POST-UPDATE',
+    newText: string
+}
+
+export type ActionsTypes = AddPostActionType | newPostUpdateActionType
+
+
 export type StoreType = {
     _state: StateType
-    addPost: () => void
-    newPostUpdate: (newText: string) => void
     _renderTree: (state:StateType) => void
     subscribe: (observer: () => void) => void
     getState: () => StateType
+    dispatch: (action: ActionsTypes) => void
 }
 
 let store: StoreType = {
     _state: {
         profilePage: {
             posts: [
-                {id:1, message: 'Hi, how are you?', likeValue: 15},
-                {id:2, message: 'It\'s my first post.', likeValue: 10},
-                {id:3, message: 'Where are you?', likeValue: 10},
-                {id:4, message: 'Hi!', likeValue: 50}
+                {id: 1, message: 'Hi, how are you?', likeValue: 15},
+                {id: 2, message: 'It\'s my first post.', likeValue: 10},
+                {id: 3, message: 'Where are you?', likeValue: 10},
+                {id: 4, message: 'Hi!', likeValue: 50}
             ],
             newPostText: 'Hello!'
         },
         dialogsPage: {
             dialogs: [
-                {id:1, name:'Elena'},
-                {id:2, name:'Denis'},
-                {id:3, name:'Anastasia'},
-                {id:4, name:'Danya'},
-                {id:5, name: 'Sveta'},
-                {id:6, name: 'Nikolay'},
-                {id:7, name: 'Natalia'}
+                {id: 1, name: 'Elena'},
+                {id: 2, name: 'Denis'},
+                {id: 3, name: 'Anastasia'},
+                {id: 4, name: 'Danya'},
+                {id: 5, name: 'Sveta'},
+                {id: 6, name: 'Nikolay'},
+                {id: 7, name: 'Natalia'}
             ],
             messages: [
-                {id:1, message: 'Hi!'},
-                {id:2, message: 'How are you?'},
-                {id:3, message: 'Hi!'},
-                {id:4, message: 'Hi!'},
-                {id:5, message: 'Hi!'},
-                {id:6, message: 'Hi!'},
-                {id:7, message: 'Hi!'}
+                {id: 1, message: 'Hi!'},
+                {id: 2, message: 'How are you?'},
+                {id: 3, message: 'Hi!'},
+                {id: 4, message: 'Hi!'},
+                {id: 5, message: 'Hi!'},
+                {id: 6, message: 'Hi!'},
+                {id: 7, message: 'Hi!'}
             ]
         }
     },
-    addPost () {
-        const newPost: PostsType = {
-            id: 5,
-            message: this._state.profilePage.newPostText,
-            likeValue: 0
-        }
-        this._state.profilePage.posts.push(newPost);
-        this._state.profilePage.newPostText = '';                      //обнуление строки
-        this._renderTree(this._state);
-    },
-    newPostUpdate (newText: string) {
-        this._state.profilePage.newPostText = newText;
-        this._renderTree(this._state);
-    },
-    _renderTree () {
+    _renderTree() {
         console.log('State changed');
     },
-    subscribe (observer) { //паттерны ?????
+    subscribe(observer) { //паттерны ?????
         this._renderTree = observer;
     },
     getState() {
         return this._state;
+    },
+
+    dispatch(action) {
+        if (action.type === 'ADD-POST') {
+            const newPost: PostsType = {
+                id: 5,
+                message: this._state.profilePage.newPostText,
+                likeValue: 0
+            }
+            this._state.profilePage.posts.push(newPost);
+            this._state.profilePage.newPostText = '';                      //обнуление строки
+            this._renderTree(this._state);
+        }
+        else if (action.type === 'NEW-POST-UPDATE') {
+            this._state.profilePage.newPostText = action.newText;
+            this._renderTree(this._state);
+        }
     }
 }
 

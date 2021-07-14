@@ -8,13 +8,12 @@ import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import Profile from './components/Profile/Profile';
-import {StoreType} from './redux/state';
+import {ActionsTypes, StoreType} from './redux/state';
 
 
 type AppPropsType = {
     store: StoreType
-    addPost: () => void
-    newPostUpdate: (newText: string) => void
+    dispatch: (action: ActionsTypes) => void
 }
 
 const App: React.FC<AppPropsType> = (props) => {
@@ -27,8 +26,7 @@ const App: React.FC<AppPropsType> = (props) => {
                     <Route path='/profile'
                            render={ () => <Profile
                                profilePage={state.profilePage}
-                               addPost={props.store.addPost.bind(props.store)}
-                               newPostUpdate={props.store.newPostUpdate.bind(props.store)}
+                               dispatch = {props.store.dispatch.bind(props.store)}
                            />}/>
                     <Route path='/dialogs'
                            render={ () => <Dialogs dialogsPage={state.dialogsPage} />}/>
