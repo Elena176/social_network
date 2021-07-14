@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from 'react';
-import {newPostUpdate, PostsType} from '../../../redux/state';
+import {PostsType} from '../../../redux/state';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 
