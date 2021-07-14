@@ -29,16 +29,7 @@ export type StateType = {
     dialogsPage: DialogsPageType
 }
 
-type AddPostActionType = {
-    type: 'ADD-POST'
-}
-
-type newPostUpdateActionType = {
-    type: 'NEW-POST-UPDATE',
-    newText: string
-}
-
-export type ActionsTypes = AddPostActionType | newPostUpdateActionType
+export type ActionsTypes = ReturnType<typeof  addPostActionCreator> | ReturnType<typeof newPostUpdateActionCreator>
 
 
 export type StoreType = {
@@ -47,6 +38,14 @@ export type StoreType = {
     subscribe: (observer: () => void) => void
     getState: () => StateType
     dispatch: (action: ActionsTypes) => void
+}
+
+export const addPostActionCreator = () => {
+    return {type: 'ADD-POST'} as const
+}
+
+export const newPostUpdateActionCreator = (text: string) => {
+    return  {type: 'NEW-POST-UPDATE', newText: text} as const
 }
 
 let store: StoreType = {
