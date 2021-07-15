@@ -8,7 +8,7 @@ import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import Profile from './components/Profile/Profile';
-import {ActionsTypes, StoreType} from './redux/state';
+import {ActionsTypes, StoreType} from './redux/store';
 
 
 type AppPropsType = {

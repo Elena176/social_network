@@ -1,3 +1,6 @@
+import profileReducer, {addPostActionCreator, newPostUpdateActionCreator} from './profile-reducer';
+import dialogsReducer, {sendMessageAC, updateNewMessageBodyAC} from './dialogs-reducer';
+import sidebarReducer from './sidebar-reducer';
 
 export type DialogsType = {
     id: number,
@@ -26,12 +29,16 @@ export type DialogsPageType = {
     newMessageBody: string
 }
 export type StateType = {
-    profilePage: ProfilePageType,
+    profilePage: ProfilePageType
     dialogsPage: DialogsPageType
+    sidebar: any
 }
 
-export type ActionsTypes = ReturnType<typeof  addPostActionCreator> | ReturnType<typeof newPostUpdateActionCreator> |
-    ReturnType<typeof sendMessageAC> | ReturnType<typeof updateNewMessageBodyAC>
+
+export type ActionsTypes = ReturnType<typeof  addPostActionCreator>
+    | ReturnType<typeof newPostUpdateActionCreator>
+    | ReturnType<typeof sendMessageAC>
+    | ReturnType<typeof updateNewMessageBodyAC>
 
 
 export type StoreType = {
@@ -42,17 +49,7 @@ export type StoreType = {
     dispatch: (action: ActionsTypes) => void
 }
 
-export const addPostActionCreator = () => {
-    return {type: 'ADD-POST'} as const
-}
 
-export const newPostUpdateActionCreator = (text: string) => {
-    return  {type: 'NEW-POST-UPDATE', newText: text} as const
-}
-
-export const sendMessageAC = () => ({type: 'SEND-MESSAGE'}) as const
-
-export const updateNewMessageBodyAC = (body: string) => ({type: 'UPDATE-NEW-MESSAGE-BODY', body: body}) as const
 
 let store: StoreType = {
     _state: {
@@ -85,7 +82,8 @@ let store: StoreType = {
                 {id: 7, message: 'Hi!'}
             ],
             newMessageBody: ''
-        }
+        },
+        sidebar: {}
     },
     _renderTree() {
         console.log('State changed');
@@ -98,32 +96,14 @@ let store: StoreType = {
     },
 
     dispatch(action) {
-        if (action.type === 'ADD-POST') {
-            const newPost: PostsType = {
-                id: 5,
-                message: this._state.profilePage.newPostText,
-                likeValue: 0
-            }
-            this._state.profilePage.posts.push(newPost);
-            this._state.profilePage.newPostText = '';                      //обнуление строки
-            this._renderTree(this._state);
-        }
-        else if (action.type === 'NEW-POST-UPDATE') {
-            this._state.profilePage.newPostText = action.newText;
-            this._renderTree(this._state);
-        }
-        else if (action.type === 'SEND-MESSAGE') {
-            const body = this._state.dialogsPage.newMessageBody;
-            this._state.dialogsPage.newMessageBody = '';
-            this._state.dialogsPage.messages.push({id: 8, message: body});
-            this._renderTree(this._state);
-        }
-        else if (action.type === 'UPDATE-NEW-MESSAGE-BODY') {
-            this._state.dialogsPage.newMessageBody = action.body;
-            this._renderTree(this._state);
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action);
+
+        this._renderTree(this._state);
     }
 }
+
 
 export default store;
 
