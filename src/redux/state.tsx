@@ -21,15 +21,17 @@ export type ProfilePageType = {
 }
 
 export type DialogsPageType = {
-    dialogs: Array<DialogsType>,
+    dialogs: Array<DialogsType>
     messages: Array<MessagesType>
+    newMessageBody: string
 }
 export type StateType = {
     profilePage: ProfilePageType,
     dialogsPage: DialogsPageType
 }
 
-export type ActionsTypes = ReturnType<typeof  addPostActionCreator> | ReturnType<typeof newPostUpdateActionCreator>
+export type ActionsTypes = ReturnType<typeof  addPostActionCreator> | ReturnType<typeof newPostUpdateActionCreator> |
+    ReturnType<typeof sendMessageAC> | ReturnType<typeof updateNewMessageBodyAC>
 
 
 export type StoreType = {
@@ -47,6 +49,10 @@ export const addPostActionCreator = () => {
 export const newPostUpdateActionCreator = (text: string) => {
     return  {type: 'NEW-POST-UPDATE', newText: text} as const
 }
+
+export const sendMessageAC = () => ({type: 'SEND-MESSAGE'}) as const
+
+export const updateNewMessageBodyAC = (body: string) => ({type: 'UPDATE-NEW-MESSAGE-BODY', body: body}) as const
 
 let store: StoreType = {
     _state: {
@@ -77,7 +83,8 @@ let store: StoreType = {
                 {id: 5, message: 'Hi!'},
                 {id: 6, message: 'Hi!'},
                 {id: 7, message: 'Hi!'}
-            ]
+            ],
+            newMessageBody: ''
         }
     },
     _renderTree() {
@@ -103,6 +110,16 @@ let store: StoreType = {
         }
         else if (action.type === 'NEW-POST-UPDATE') {
             this._state.profilePage.newPostText = action.newText;
+            this._renderTree(this._state);
+        }
+        else if (action.type === 'SEND-MESSAGE') {
+            const body = this._state.dialogsPage.newMessageBody;
+            this._state.dialogsPage.newMessageBody = '';
+            this._state.dialogsPage.messages.push({id: 8, message: body});
+            this._renderTree(this._state);
+        }
+        else if (action.type === 'UPDATE-NEW-MESSAGE-BODY') {
+            this._state.dialogsPage.newMessageBody = action.body;
             this._renderTree(this._state);
         }
     }
