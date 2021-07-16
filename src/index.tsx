@@ -12,7 +12,6 @@ export const renderTree = () => {
         <React.StrictMode>
             <BrowserRouter>
                 <App store={store}
-                     dispatch={store.dispatch}
                 />
             </BrowserRouter>
         </React.StrictMode>,

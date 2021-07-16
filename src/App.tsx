@@ -8,12 +8,11 @@ import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import Profile from './components/Profile/Profile';
-import {ActionsTypes, StoreType} from './redux/store';
+import { StoreType} from './redux/store';
 
 
 type AppPropsType = {
     store: StoreType
-    dispatch: (action: ActionsTypes) => void
 }
 
 const App: React.FC<AppPropsType> = (props) => {
@@ -24,9 +23,7 @@ const App: React.FC<AppPropsType> = (props) => {
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Route path='/profile'
-                           render={ () => <Profile
-                               profilePage={state.profilePage}
-                               dispatch = {props.store.dispatch.bind(props.store)}
+                           render={ () => <Profile store={props.store}
                            />}/>
                     <Route path='/dialogs'
                            render={ () => <Dialogs dialogsPage={state.dialogsPage}
