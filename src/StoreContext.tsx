@@ -5,7 +5,7 @@ const StoreContext = React.createContext({} as StoreType);
 
 export type ProviderType = {
     store: StoreType
-    children: any
+    children: React.ReactNode
 }
 
 export const Provider = (props: ProviderType) => {
