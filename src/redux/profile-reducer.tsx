@@ -1,6 +1,17 @@
-import {ActionsTypes, PostsType, ProfilePageType} from './store';
+import {ActionsTypes} from './store';
 
-let initialState = {
+export type PostType = {
+    id: number
+    message: string
+    likeValue: number
+}
+
+export type InitialStateType = {
+    posts: Array<PostType>
+    newPostText: string
+}
+
+let initialState: InitialStateType = {
     posts: [
         {id: 1, message: 'Hi, how are you?', likeValue: 15},
         {id: 2, message: 'It\'s my first post.', likeValue: 10},
@@ -10,22 +21,30 @@ let initialState = {
     newPostText: 'Hello!'
 }
 
-const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes) => {
+const profileReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
+
     switch (action.type) {
-        case 'ADD-POST':
-            const newPost: PostsType = {
+
+        case 'ADD-POST': {
+            const newPost: PostType = {
                 id: 5,
                 message: state.newPostText,
                 likeValue: 0
             }
-            state.posts.push(newPost);
-            state.newPostText = '';                      //обнуление строки
-            return state;
-        case 'NEW-POST-UPDATE':
-            state.newPostText = action.newText;
-            return state;
+            let stateCopy = {...state}
+            stateCopy.posts = [...state.posts]
+            stateCopy.posts.push(newPost);
+            stateCopy.newPostText = '';                      //обнуление строки
+            return stateCopy;
+        }
+        case 'NEW-POST-UPDATE': {
+            let stateCopy = {...state};
+            stateCopy.newPostText = action.newText;
+            return stateCopy;
+        }
         default:
             return state;
+
     }
 }
 
