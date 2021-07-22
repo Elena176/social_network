@@ -24,23 +24,23 @@ let initialState: InitialStateType = {
 const profileReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
 
     switch (action.type) {
-
         case 'ADD-POST': {
             const newPost: PostType = {
                 id: 5,
                 message: state.newPostText,
                 likeValue: 0
             }
-            let stateCopy = {...state}
-            stateCopy.posts = [...state.posts]
-            stateCopy.posts.push(newPost);
-            stateCopy.newPostText = '';                      //обнуление строки
-            return stateCopy;
+            return {
+            ...state,
+            posts: [...state.posts, newPost],
+            newPostText: ''                      //обнуление строки
+        };
         }
         case 'NEW-POST-UPDATE': {
-            let stateCopy = {...state};
-            stateCopy.newPostText = action.newText;
-            return stateCopy;
+            return {
+                ...state,
+                newPostText: action.newText
+            };
         }
         default:
             return state;
