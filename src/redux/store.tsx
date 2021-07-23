@@ -1,6 +1,7 @@
 import profileReducer, {addPostActionCreator, newPostUpdateActionCreator} from './profile-reducer';
 import dialogsReducer, {sendMessageAC, updateNewMessageBodyAC} from './dialogs-reducer';
 import sidebarReducer from './sidebar-reducer';
+import {followAC, setUsersAC, unfollowAC} from './users-reducer';
 
 type DialogsType = {
     id: number,
@@ -35,20 +36,22 @@ type StateType = {
 }
 
 
-export type ActionsTypes = ReturnType<typeof  addPostActionCreator>
+export type ActionsTypes = ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof newPostUpdateActionCreator>
     | ReturnType<typeof sendMessageAC>
     | ReturnType<typeof updateNewMessageBodyAC>
+    | ReturnType<typeof followAC>
+    | ReturnType<typeof unfollowAC>
+    | ReturnType<typeof setUsersAC>
 
 
-export type StoreType = {
+ type StoreType = {
     _state: StateType
-    _renderTree: (state:StateType) => void
+    _renderTree: (state: StateType) => void
     subscribe: (observer: () => void) => void
     getState: () => StateType
     dispatch: (action: ActionsTypes) => void
 }
-
 
 
 let store: StoreType = {
@@ -105,7 +108,7 @@ let store: StoreType = {
 }
 
 
-export default store;
+
 
 
 

@@ -22,7 +22,7 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 }
 
 let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType  => {
-    return{
+    return {
         onSendMessageClick: () => {
             dispatch(sendMessageAC());
         },

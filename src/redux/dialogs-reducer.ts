@@ -15,7 +15,7 @@ export type InitialStateType = {
     newMessageBody: string
 }
 
-let initialState = {
+let initialState: InitialStateType = {
     dialogs: [
         {id: 1, name: 'Elena'},
         {id: 2, name: 'Denis'},
