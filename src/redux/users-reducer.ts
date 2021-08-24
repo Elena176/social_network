@@ -5,10 +5,10 @@ type locationPropsType = {
     country: string
 }
 export type UserType = {
+    photos: {small: string}
     id: number
-    photoUrl: string
     followed: boolean
-    fullName: string
+    name: string
     status: string
     location: locationPropsType
 }

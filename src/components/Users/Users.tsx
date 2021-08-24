@@ -1,46 +1,21 @@
 import React from 'react';
 import {UsersPropsType} from './UcersContainer';
 import s from './users.module.css';
+import axios from 'axios';
+import userPhoto from '../../assets/images/user.png';
 
 const Users: React.FC<UsersPropsType> = (props) => {
     if (props.users.length === 0) {
-        props.setUsers([
-            {
-                id: 1,
-                photoUrl: 'https://klike.net/uploads/posts/2019-03/1551511823_2.jpg',
-                followed: true,
-                fullName: 'Elena',
-                status: 'I am so pretty',
-                location: {city: 'Odessa', country: 'Ukraine'}
-            },
-            {
-                id: 2, photoUrl: 'https://klike.net/uploads/posts/2019-03/1551511804_3.jpg',
-                followed: true, fullName: 'Denis', status: 'I am a boss', location: {city: 'Odessa', country: 'Ukraine'}
-            },
-            {
-                id: 3,
-                photoUrl: 'https://klike.net/uploads/posts/2019-03/1551511823_2.jpg',
-                followed: false,
-                fullName: 'Natasha',
-                status: 'I am a grandma',
-                location: {city: 'Minsk', country: 'Belarus'}
-            },
-            {
-                id: 4,
-                photoUrl: 'https://klike.net/uploads/posts/2019-03/1551511823_2.jpg',
-                followed: true,
-                fullName: 'Nastya',
-                status: 'I am so pretty too',
-                location: {city: 'Vienna', country: 'Austria'}
-            },
-        ])
+        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+            props.setUsers(response.data.items)
+        })
     }
     return <div>
         {
             props.users.map(u => <div key={u.id}>
                 <span>
                     <div>
-                        <img src={u.photoUrl} alt={''} className={s.userPhoto}/>
+                        <img src={u.photos.small != null ? u.photos.small : userPhoto} alt={''} className={s.userPhoto}/>
                     </div>
                     <div>
                         {u.followed
@@ -51,12 +26,12 @@ const Users: React.FC<UsersPropsType> = (props) => {
                 </span>
                 <span>
                     <span>
-                        <div>{u.fullName}</div>
+                        <div>{u.name}</div>
                         <div>{u.status}</div>
                     </span>
                     <span>
-                        <div>{u.location.city}</div>
-                        <div>{u.location.country}</div>
+                        <div>{'u.location.city'}</div>
+                        <div>{'u.location.country'}</div>
                     </span>
                 </span>
                 </div>
