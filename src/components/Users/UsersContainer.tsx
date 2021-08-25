@@ -34,7 +34,6 @@ let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
         setUsers: (users: Array<UserType>) => {
             dispatch(setUsersAC(users))
         },
-
     }
 }
 
