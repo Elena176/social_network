@@ -1,7 +1,14 @@
 import profileReducer, {addPostActionCreator, newPostUpdateActionCreator} from './profile-reducer';
 import dialogsReducer, {sendMessageAC, updateNewMessageBodyAC} from './dialogs-reducer';
 import sidebarReducer from './sidebar-reducer';
-import {followAC, setCurrentPageAC, setTotalUsersCountAC, setUsersAC, unfollowAC} from './users-reducer';
+import {
+    followAC,
+    setCurrentPageAC,
+    setTotalUsersCountAC,
+    setUsersAC,
+    toggleIsFetchingAC,
+    unfollowAC
+} from './users-reducer';
 
 type DialogsType = {
     id: number,
@@ -45,6 +52,7 @@ export type ActionsTypes = ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof setUsersAC>
 | ReturnType<typeof setCurrentPageAC>
 | ReturnType<typeof setTotalUsersCountAC>
+| ReturnType<typeof toggleIsFetchingAC>
 
 
  type StoreType = {
