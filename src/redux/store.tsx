@@ -1,4 +1,8 @@
-import profileReducer, {addPostActionCreator, newPostUpdateActionCreator} from './profile-reducer';
+import profileReducer, {
+    addPostActionCreator,
+    newPostUpdateActionCreator,
+    setUserProfile
+} from './profile-reducer';
 import dialogsReducer, {sendMessageAC, updateNewMessageBodyAC} from './dialogs-reducer';
 import sidebarReducer from './sidebar-reducer';
 import {
@@ -22,9 +26,31 @@ type PostsType = {
     likeValue: number
 }
 
+export type ProfileUserType = null | {
+    id: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    contacts: {
+        github: string
+        vk: string
+        facebook: string
+        instagram: string
+        twitter: string
+        website: string
+        youtube: string
+        mainLink: string
+    }
+    photos: {
+        small: string
+        large: string
+    }
+}
+
 type ProfilePageType = {
     posts: Array<PostsType>
     newPostText: string
+    profile: null | ProfileUserType
 }
 
 type DialogsPageType = {
@@ -46,12 +72,13 @@ export type ActionsTypes = ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof follow>
     | ReturnType<typeof unfollow>
     | ReturnType<typeof setUsers>
-| ReturnType<typeof setCurrentPage>
-| ReturnType<typeof setTotalUsersCount>
-| ReturnType<typeof toggleIsFetching>
+    | ReturnType<typeof setCurrentPage>
+    | ReturnType<typeof setTotalUsersCount>
+    | ReturnType<typeof toggleIsFetching>
+    | ReturnType<typeof setUserProfile>
 
 
- type StoreType = {
+type StoreType = {
     _state: StateType
     _renderTree: (state: StateType) => void
     subscribe: (observer: () => void) => void
@@ -69,7 +96,8 @@ let store: StoreType = {
                 {id: 3, message: 'Where are you?', likeValue: 10},
                 {id: 4, message: 'Hi!', likeValue: 50}
             ],
-            newPostText: 'Hello!'
+            newPostText: 'Hello!',
+            profile: null,
         },
         dialogsPage: {
             dialogs: [
