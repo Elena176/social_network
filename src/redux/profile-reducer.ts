@@ -46,11 +46,12 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionsT
                 newPostText: action.newText
             };
         }
-        case 'SET-USER-PROFILE':
+        case 'SET-USER-PROFILE': {
             return {
                 ...state,
                 profile: action.profile
-            };
+            }
+        }
         default:
             return state;
 
