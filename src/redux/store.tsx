@@ -9,6 +9,7 @@ import {
     follow, setCurrentPage, setTotalUsersCount, setUsers, toggleIsFetching, unfollow
 
 } from './users-reducer';
+import {setAuthUserData} from './auth-reducer';
 
 type DialogsType = {
     id: number,
@@ -47,6 +48,18 @@ export type ProfileUserType = null | {
     }
 }
 
+export type DataPropsType = null | {
+        id: number
+        email: string
+        login: string
+}
+
+export type DataLoginPropsType = {
+    data: null | DataPropsType
+    resultCode: number
+    messages: string[]
+}
+
 type ProfilePageType = {
     posts: Array<PostsType>
     newPostText: string
@@ -76,6 +89,7 @@ export type ActionsTypes = ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof setTotalUsersCount>
     | ReturnType<typeof toggleIsFetching>
     | ReturnType<typeof setUserProfile>
+    | ReturnType<typeof setAuthUserData>
 
 
 type StoreType = {
