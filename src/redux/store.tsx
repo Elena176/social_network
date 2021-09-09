@@ -6,8 +6,7 @@ import profileReducer, {
 import dialogsReducer, {sendMessageAC, updateNewMessageBodyAC} from './dialogs-reducer';
 import sidebarReducer from './sidebar-reducer';
 import {
-    follow, setCurrentPage, setTotalUsersCount, setUsers, toggleIsFetching, unfollow
-
+    follow, setCurrentPage, setTotalUsersCount, setUsers, toggleIsFetching, unfollow,
 } from './users-reducer';
 import {setAuthUserData} from './auth-reducer';
 
@@ -25,6 +24,23 @@ type PostsType = {
     id: number,
     message: string,
     likeValue: number
+}
+
+type locationPropsType = {
+    city: string
+    country: string
+}
+
+export type UserType = {
+    id: number
+    name: string
+    status: string
+    followed: boolean
+    location: locationPropsType
+    photos: {
+        small: string,
+        large: string
+    }
 }
 
 export type ProfileUserType = null | {
@@ -49,15 +65,27 @@ export type ProfileUserType = null | {
 }
 
 export type DataPropsType = null | {
-        id: number
-        email: string
-        login: string
+    id: number
+    email: string
+    login: string
 }
 
 export type DataLoginPropsType = {
     data: null | DataPropsType
     resultCode: number
     messages: string[]
+}
+
+export type DataUsersPropsType = {
+    items: Array<UserType>
+    totalCount: number
+    error: string
+}
+
+export type FollowUserPropsType = {
+    resultCode: number
+    messages: string[]
+    data: {}
 }
 
 type ProfilePageType = {

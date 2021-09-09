@@ -23,7 +23,6 @@ class HeaderContainer extends React.Component <HeaderContainerPropsType> {
             withCredentials: true                                           //настройки запроса
         })
             .then(response => {
-                debugger;
                 if (response.data.resultCode === 0) {                     //проверка залогинен пользователь или нет
                     this.props.setAuthUserData(response.data.data);
                 }

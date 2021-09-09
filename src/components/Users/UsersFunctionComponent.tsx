@@ -1,8 +1,9 @@
 import React from 'react';
 import s from './users.module.css';
 import userPhoto from '../../assets/images/user.png';
-import {UserType} from '../../redux/users-reducer';
-import { NavLink } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
+import {FollowUserPropsType, UserType} from '../../redux/store';
+import axios from 'axios';
 
 type UsersFunctionComponentPropsType = {
     users: Array<UserType>
@@ -46,10 +47,33 @@ export let UsersFunctionComponent = (props: UsersFunctionComponentPropsType) => 
                     <div>
                         {u.followed
                             ? <button onClick={() => {
-                                props.unfollow(u.id)
+                                axios.delete<FollowUserPropsType>(
+                                    `https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,{
+                                        withCredentials: true,
+                                        headers: {
+                                            'API-KEY':'5d9e2ad6-9759-43e9-a5e1-226b020868e0'
+                                        }
+                                    })
+                                    .then(response => {
+                                        if (response.data.resultCode === 0) {
+                                            props.unfollow(u.id)
+                                        }
+                                    });
+
                             }}>Unfollow</button>
                             : <button onClick={() => {
-                                props.follow(u.id)
+                                axios.post<FollowUserPropsType>(
+                                    `https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
+                                        withCredentials: true,
+                                        headers: {
+                                            'API-KEY':'5d9e2ad6-9759-43e9-a5e1-226b020868e0'
+                                        }
+                                    })
+                                    .then(response => {
+                                        if (response.data.resultCode === 0) {
+                                            props.follow(u.id)
+                                        }
+                                    });
                             }}>Follow</button>
                         }
                     </div>
@@ -59,10 +83,10 @@ export let UsersFunctionComponent = (props: UsersFunctionComponentPropsType) => 
                         <div>{u.name}</div>
                         <div>{u.status}</div>
                     </span>
-                    <span>
+                            {/* <span>
                         <div>{'u.location.city'}</div>
                         <div>{'u.location.country'}</div>
-                    </span>
+                    </span>*/}
                 </span>
                     </div>
                 )

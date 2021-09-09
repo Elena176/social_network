@@ -1,17 +1,4 @@
-import {ActionsTypes} from './store';
-
-type locationPropsType = {
-    city: string
-    country: string
-}
-export type UserType = {
-    photos: {small: string}
-    id: number
-    followed: boolean
-    name: string
-    status: string
-    location: locationPropsType
-}
+import {ActionsTypes, UserType} from './store';
 
 export type InitialStateUsersType = {
     users: Array<UserType>
