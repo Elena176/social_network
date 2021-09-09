@@ -70,7 +70,7 @@ class UsersContainer extends React.Component <UsersPropsType> {
     }
 }
 
-let mapStateToProps = (state: AppStateType): MapStatePropsType => {
+let mapStateToProps = (state: AppStateType) => {
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
@@ -105,7 +105,7 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 }*/
 
 
-export default connect(mapStateToProps, {
+export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {
     follow,
     unfollow,
     setUsers,
