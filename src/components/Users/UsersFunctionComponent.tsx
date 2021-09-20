@@ -3,7 +3,7 @@ import s from './users.module.css';
 import userPhoto from '../../assets/images/user.png';
 import {NavLink} from 'react-router-dom';
 import {UserType} from '../../redux/store';
-import {deleteUser, followUser} from '../../api/api';
+import {followAPI, unFollowAPI} from '../../api/api';
 
 type UsersFunctionComponentPropsType = {
     users: Array<UserType>
@@ -47,7 +47,7 @@ export let UsersFunctionComponent = (props: UsersFunctionComponentPropsType) => 
                     <div>
                         {u.followed
                             ? <button onClick={() => {
-                                deleteUser(u.id).then(data => {
+                                unFollowAPI.deleteUser(u.id).then(data => {
                                         if (data.resultCode === 0) {
                                             props.unfollow(u.id)
                                         }
@@ -55,7 +55,7 @@ export let UsersFunctionComponent = (props: UsersFunctionComponentPropsType) => 
 
                             }}>Unfollow</button>
                             : <button onClick={() => {
-                                followUser(u.id).then(data => {
+                                followAPI.followUser(u.id).then(data => {
                                         if (data.resultCode === 0) {
                                             props.follow(u.id)
                                         }

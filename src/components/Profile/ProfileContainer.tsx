@@ -5,7 +5,7 @@ import {AppStateType} from '../../redux/redux-store';
 import {setUserProfile} from '../../redux/profile-reducer';
 import {ProfileUserType} from '../../redux/store';
 import {RouteComponentProps, withRouter } from 'react-router';
-import {getProfile} from '../../api/api';
+import {profileAPI} from '../../api/api';
 
 type PathParamsType = {
     userId: string
@@ -30,7 +30,7 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
         if (!userId) {
             userId = String(19383);
         }
-        getProfile(userId)                          //запрос на получение профайла user
+        profileAPI.getProfile(userId)                          //запрос на получение профайла user
         .then(data => {
             this.props.setUserProfile(data)
         });
