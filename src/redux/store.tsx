@@ -6,7 +6,7 @@ import profileReducer, {
 import dialogsReducer, {sendMessageAC, updateNewMessageBodyAC} from './dialogs-reducer';
 import sidebarReducer from './sidebar-reducer';
 import {
-    follow, setCurrentPage, setTotalUsersCount, setUsers, toggleIsFetching, unfollow,
+    follow, setCurrentPage, setTotalUsersCount, setUsers, toggleIsFetching, toggleIsFollowingProgress, unfollow,
 } from './users-reducer';
 import {setAuthUserData} from './auth-reducer';
 
@@ -118,6 +118,7 @@ export type ActionsTypes = ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof toggleIsFetching>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setAuthUserData>
+    | ReturnType<typeof toggleIsFollowingProgress>
 
 
 type StoreType = {
