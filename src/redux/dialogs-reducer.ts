@@ -1,4 +1,4 @@
-import {ActionsTypes} from './store';
+import {ActionTypes} from './store';
 
 type DialogType = {
     id: number,
@@ -38,7 +38,7 @@ let initialState: InitialStateType = {
 }
 
 
-const dialogsReducer = (state:InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
+const dialogsReducer = (state:InitialStateType = initialState, action: ActionTypes): InitialStateType => {
     let stateCopy = {...state,
     //messages: [...state.messages];
     };

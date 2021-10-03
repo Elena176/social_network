@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {DataUsersPropsType, FollowUserPropsType, ProfileUserType} from '../redux/store';
+import {DataLoginPropsType, DataUsersPropsType, FollowUserPropsType, ProfileUserType} from '../redux/store';
 
 const instance = axios.create({
     withCredentials: true,
@@ -8,6 +8,13 @@ const instance = axios.create({
     'API-KEY':'5d9e2ad6-9759-43e9-a5e1-226b020868e0'
 },
 });
+
+export const authAPI = {
+     me() {
+         return instance.get<DataLoginPropsType>(`auth/me`)
+     },
+}
+
 export const usersAPI = {
     getUsers(currentPage: number, pageSize: number) {
         return instance.get<DataUsersPropsType>(`users?page=${currentPage}&count=${pageSize}`).then(response => response.data)
@@ -19,18 +26,6 @@ export const usersAPI = {
         return  instance.delete<FollowUserPropsType> (`follow/${userId}`)
     }
 };
-
-/*export const unFollowAPI = {
-    deleteUser (id: number) {
-        return  instance.delete<FollowUserPropsType> (`follow/${id}`).then(response => response.data)
-    }
-};
-
-export const followAPI = {
-    followUser (id: number) {
-        return instance.post<FollowUserPropsType>(`follow/${id}`).then(response => response.data)
-    }
-}*/
 
 export const profileAPI = {
     getProfile (userId: string) {

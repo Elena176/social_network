@@ -1,4 +1,4 @@
-import {ActionsTypes, UserType} from './store';
+import {ActionTypes, UserType} from './store';
 import {usersAPI} from '../api/api';
 
 const FOLLOW = 'FOLLOW';
@@ -27,7 +27,7 @@ let initialState: InitialStateUsersType = {
     followingInProgress: [],
 }
 
-const usersReducer = (state: InitialStateUsersType = initialState, action: ActionsTypes): InitialStateUsersType => {
+const usersReducer = (state: InitialStateUsersType = initialState, action: ActionTypes): InitialStateUsersType => {
 
     switch (action.type) {
         case 'FOLLOW':
@@ -108,6 +108,17 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
             dispatch(toggleIsFetching(false))                  // после ответа убираем preloader
             dispatch(setUsers(data.items))
             //dispatch(setTotalUsersCount(response.data.totalCount)) //обновляем количество totalUsers
+        });
+    }
+}
+
+export const onPageChanged = (pageNumber: number, pageSize: number) => {
+    return (dispatch: any) => {
+        dispatch(setCurrentPage(pageNumber));
+        dispatch(toggleIsFetching(true));
+        usersAPI.getUsers(pageNumber, pageSize).then(data => {
+            dispatch(toggleIsFetching(false))
+            dispatch(setUsers(data.items))
         });
     }
 }

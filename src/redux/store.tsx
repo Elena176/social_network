@@ -112,7 +112,7 @@ type StateType = {
 }
 
 
-export type ActionsTypes = ReturnType<typeof addPostActionCreator>
+export type ActionTypes = ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof newPostUpdateActionCreator>
     | ReturnType<typeof sendMessageAC>
     | ReturnType<typeof updateNewMessageBodyAC>
@@ -132,7 +132,7 @@ type StoreType = {
     _renderTree: (state: StateType) => void
     subscribe: (observer: () => void) => void
     getState: () => StateType
-    dispatch: (action: ActionsTypes) => void
+    dispatch: (action: ActionTypes) => void
 }
 
 

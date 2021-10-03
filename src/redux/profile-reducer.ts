@@ -1,4 +1,6 @@
-import {ActionsTypes, ProfileUserType} from './store';
+import {ActionTypes, ProfileUserType} from './store';
+import {profileAPI} from '../api/api';
+import {Dispatch} from 'redux';
 
 export type PostType = {
     id: number
@@ -25,7 +27,7 @@ let initialState: InitialStateType = {
     profile: null,
 }
 
-const profileReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
+const profileReducer = (state: InitialStateType = initialState, action: ActionTypes): InitialStateType => {
 
     switch (action.type) {
         case 'ADD-POST': {
@@ -68,5 +70,14 @@ export const newPostUpdateActionCreator = (text: string) => {
 
 export const setUserProfile = (profile: ProfileUserType) => {
     return {type: 'SET-USER-PROFILE', profile} as const
+}
+
+export const getProfile = (userId: string) => {
+    return (dispatch: Dispatch<ActionTypes>) => {
+        profileAPI.getProfile(userId)                          //запрос на получение профайла user
+            .then(data => {
+                dispatch(setUserProfile(data))
+            });
+    }
 }
 export default profileReducer;

@@ -14,7 +14,7 @@ import HeaderContainer from './components/Header/HeaderContainer';
 const App = () => {
     return (
         <div className='app-wrapper'>
-            <HeaderContainer/>
+            <HeaderContainer />
             <Navbar/>
             <div className='app-wrapper-content'>
                 <Route path='/profile/:userId?'
