@@ -15,16 +15,21 @@ const UsersF: React.FC<UsersPropsType> = (props) => {
             props.users.map(u => <div key={u.id}>
                 <span>
                     <div>
-                        <img src={u.photos.small != null ? u.photos.small : userPhoto} alt={''} className={s.userPhoto}/>
+                        <img src={u.photos.small != null ? u.photos.small : userPhoto} alt={''}
+                             className={s.userPhoto}/>
                     </div>
                     <div>
                         {u.followed
-                            ? <button onClick={() => {props.unfollow(u.id)}}>Unfollow</button>
-                            : <button onClick={() => {props.follow(u.id)}}>Follow</button>
+                            ? <button onClick={() => {
+                                props.unfollowSuccess(u.id)
+                            }}>Unfollow</button>
+                            : <button onClick={() => {
+                                props.followSuccess(u.id)
+                            }}>Follow</button>
                         }
                     </div>
                 </span>
-                <span>
+                    <span>
                     <span>
                         <div>{u.name}</div>
                         <div>{u.status}</div>
