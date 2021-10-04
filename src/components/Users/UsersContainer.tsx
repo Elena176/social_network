@@ -13,6 +13,7 @@ import {UsersFunctionComponent} from './UsersFunctionComponent';
 import {Preloader} from '../common/Preloader/Preloader';
 import {UserType} from '../../redux/store';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
+import {compose} from 'redux';
 
 type MapStatePropsType = {
     users: Array<UserType>
@@ -101,20 +102,19 @@ let mapStateToProps = (state: AppStateType) => {
     }
 
 }*/
-
-let withRedirect = withAuthRedirect(UsersContainer);
-
-export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {
-    followSuccess,
-    unfollowSuccess,
-    setUsers,
-    setCurrentPage,
-    setTotalUsersCount,
-    toggleIsFetching,
-    toggleIsFollowingProgress,
-    getUsersThunkCreator,
-    follow,
-    unFollow,
-onPageChanged,
-
-})(withRedirect);
+export default compose<React.ComponentType>(
+    connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {
+        followSuccess,
+        unfollowSuccess,
+        setUsers,
+        setCurrentPage,
+        setTotalUsersCount,
+        toggleIsFetching,
+        toggleIsFollowingProgress,
+        getUsersThunkCreator,
+        follow,
+        unFollow,
+        onPageChanged,
+    }),
+    withAuthRedirect,
+)(UsersContainer);
