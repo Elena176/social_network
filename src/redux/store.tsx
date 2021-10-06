@@ -1,3 +1,4 @@
+/*
 import profileReducer, {
     addPostActionCreator,
     newPostUpdateActionCreator,
@@ -74,24 +75,6 @@ export type DataPropsType = null | {
     id: number
     email: string
     login: string
-}
-
-export type DataLoginPropsType = {
-    data: null | DataPropsType
-    resultCode: number
-    messages: string[]
-}
-
-export type DataUsersPropsType = {
-    items: Array<UserType>
-    totalCount: number
-    error: string
-}
-
-export type FollowUserPropsType = {
-    resultCode: number
-    messages: string[]
-    data: {}
 }
 
 type ProfilePageType = {
@@ -201,3 +184,5 @@ let store: StoreType = {
 
 
 
+
+*/

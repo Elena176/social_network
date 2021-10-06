@@ -1,4 +1,5 @@
-import {ActionTypes} from './store';
+import {ActionTypes} from './Types';
+
 
 type DialogType = {
     id: number,
@@ -38,9 +39,10 @@ let initialState: InitialStateType = {
 }
 
 
-const dialogsReducer = (state:InitialStateType = initialState, action: ActionTypes): InitialStateType => {
-    let stateCopy = {...state,
-    //messages: [...state.messages];
+const dialogsReducer = (state: InitialStateType = initialState, action: ActionTypes): InitialStateType => {
+    let stateCopy = {
+        ...state,
+        //messages: [...state.messages];
     };
     switch (action.type) {
         case 'SEND-MESSAGE':
@@ -49,7 +51,7 @@ const dialogsReducer = (state:InitialStateType = initialState, action: ActionTyp
             stateCopy.messages.push({id: 8, message: body});
             return stateCopy;
         case 'UPDATE-NEW-MESSAGE-BODY': {
-let stateCopy = {...state}
+            let stateCopy = {...state}
             stateCopy.newMessageBody = action.body;
             return stateCopy;
         }

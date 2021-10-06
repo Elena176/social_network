@@ -1,5 +1,6 @@
-import {ActionTypes, UserType} from './store';
+
 import {usersAPI} from '../api/api';
+import {ActionTypes, UserType} from './Types';
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';

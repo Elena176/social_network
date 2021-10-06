@@ -1,5 +1,12 @@
 import axios from 'axios';
-import {DataLoginPropsType, DataUsersPropsType, FollowUserPropsType, ProfileUserType} from '../redux/store';
+import {
+    DataLoginPropsType,
+    DataUsersPropsType,
+    FollowUserPropsType,
+    ProfileUserType,
+    StatusPropsType
+} from '../redux/Types';
+
 
 const instance = axios.create({
     withCredentials: true,
@@ -30,5 +37,11 @@ export const usersAPI = {
 export const profileAPI = {
     getProfile (userId: string) {
         return  instance.get<ProfileUserType>( `profile/` + userId).then(response => response.data)
-    }
+    },
+    getStatus(userId: string) {
+        return instance.get<any>(`status/` + userId);
+    },
+    updateStatus(status: string) {
+        return instance.put<StatusPropsType>(`status`, {status: status})
+    },
 };

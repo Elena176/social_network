@@ -1,6 +1,6 @@
-import {ActionTypes, DataPropsType} from './store';
 import {authAPI} from '../api/api';
 import {Dispatch} from 'redux';
+import {ActionTypes, DataPropsType} from './Types';
 
 export type InitialStateDataType = {
     data: DataPropsType
