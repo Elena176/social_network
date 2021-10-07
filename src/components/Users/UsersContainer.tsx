@@ -11,9 +11,9 @@ import {
 } from '../../redux/users-reducer';
 import {UsersFunctionComponent} from './UsersFunctionComponent';
 import {Preloader} from '../common/Preloader/Preloader';
-import {UserType} from '../../redux/store';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
+import {UserType} from '../../redux/Types';
 
 type MapStatePropsType = {
     users: Array<UserType>

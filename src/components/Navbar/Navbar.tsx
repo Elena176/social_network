@@ -2,18 +2,6 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import s from './Navbar.module.css';
 
-console.log(s);
-/* let s ={
-    'nav': 'Navbar_nav__PI7Uj',
-    'item': 'Navbar_item__12zRG '
-    'active': ________
-}*/
-/*let c1='item';
-let c2='active';
-'item active'
-let classes = c1 + ' ' + c2;
-let classeNew = `${s.item} ${s.active}`;*/
-
 function Navbar () {
     return (
         <nav className={s.nav}>

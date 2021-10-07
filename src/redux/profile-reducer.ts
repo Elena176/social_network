@@ -82,23 +82,35 @@ export const setUserProfile = (profile: ProfileUserType) => {
 export const setStatus = (status: string) => {
     return {type: 'SET-STATUS', status} as const
 }
+
 export const getProfile = (userId: string) => {
     return (dispatch: Dispatch<ActionTypes>) => {
-        profileAPI.getProfile(userId)                          //запрос на получение профайла user
+        //запрос на получение профайла user
+        profileAPI.getProfile(userId)
             .then(data => {
                 dispatch(setUserProfile(data))
             });
     }
 }
 
-export const getUserStatus = (userId: string) => {
-    return (dispatch: Dispatch<ActionTypes>) => {
-        profileAPI.getStatus(userId)                          //запрос на получение статуса user
-            .then(response =>
+export const getUserStatus = (userId: string) => (dispatch: Dispatch<ActionTypes>) => {
+    //запрос на получение статуса user
+    profileAPI.getStatus(userId)
+        .then(response => {
                 dispatch(setStatus(response.data))
-            )
-    };
-}
+            }
+        )
+};
 
+export const updateUserStatus = (status: string) => (dispatch: Dispatch<ActionTypes>) => {
+    //запрос на получение статуса user
+    profileAPI.updateStatus(status)
+        .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(setStatus(status))
+                }
+            }
+        )
+};
 
 export default profileReducer;

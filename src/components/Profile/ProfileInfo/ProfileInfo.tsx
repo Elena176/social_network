@@ -1,11 +1,13 @@
 import React from 'react';
 import s from './ProfileInfo.module.css';
-import {ProfileUserType} from '../../../redux/store';
 import {Preloader} from '../../common/Preloader/Preloader';
 import ProfileStatus from './ProfileStatus';
+import {ProfileUserType} from '../../../redux/Types';
 
 type ProfileInfoPropsType = {
     profile: ProfileUserType
+    status: string
+    updateUserStatus: (status: string) => void
 }
 
 const ProfileInfo = (props: ProfileInfoPropsType) => {
@@ -21,7 +23,7 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
                 {/*src={'https://www.forumdaily.com/wp-content/uploads/2016/06/Depositphotos_28019327_m-2015.jpg'}/>*/}
             </div>
             <div className={s.descriptionBlock}>
-                <ProfileStatus status={'Hello, my friend!'}/>
+                <ProfileStatus  status={props.status} updateUserStatus={props.updateUserStatus}/>
                 <img src={props.profile.photos.large} alt={''}/>
                 {props.profile.fullName}
 

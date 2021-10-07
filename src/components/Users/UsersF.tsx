@@ -4,7 +4,7 @@ import s from './users.module.css';
 import axios from 'axios';
 import userPhoto from '../../assets/images/user.png';
 
-const UsersF: React.FC<UsersPropsType> = (props) => {
+export const UsersF: React.FC<UsersPropsType> = (props) => {
     if (props.users.length === 0) {
         axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
             props.setUsers(response.data.items)
@@ -45,4 +45,4 @@ const UsersF: React.FC<UsersPropsType> = (props) => {
     </div>
 };
 
-export default UsersF;
+

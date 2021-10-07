@@ -3,8 +3,7 @@ import {
     DataLoginPropsType,
     DataUsersPropsType,
     FollowUserPropsType,
-    ProfileUserType,
-    StatusPropsType
+    ProfileUserType, StatusPropsType,
 } from '../redux/Types';
 
 
@@ -39,9 +38,9 @@ export const profileAPI = {
         return  instance.get<ProfileUserType>( `profile/` + userId).then(response => response.data)
     },
     getStatus(userId: string) {
-        return instance.get<any>(`status/` + userId);
+        return instance.get<string>(`profile/status/` + userId);
     },
     updateStatus(status: string) {
-        return instance.put<StatusPropsType>(`status`, {status: status})
+        return instance.put<StatusPropsType>(`profile/status`, {status: status})
     },
 };
