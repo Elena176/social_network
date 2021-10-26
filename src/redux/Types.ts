@@ -1,4 +1,4 @@
-import {addPostActionCreator, newPostUpdateActionCreator, setStatus, setUserProfile} from './profile-reducer';
+import {addPostActionCreator, setStatus, setUserProfile} from './profile-reducer';
 import {sendMessageAC} from './dialogs-reducer';
 import {
     followSuccess,
@@ -80,7 +80,6 @@ export type StatusPropsType = {
 
 
 export type ActionTypes = ReturnType<typeof addPostActionCreator>
-    | ReturnType<typeof newPostUpdateActionCreator>
     | ReturnType<typeof sendMessageAC>
     | ReturnType<typeof followSuccess>
     | ReturnType<typeof unfollowSuccess>

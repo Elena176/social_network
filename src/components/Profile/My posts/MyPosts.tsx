@@ -1,34 +1,26 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 import {MyPostsPropsType} from './MyPostsContainer';
+import {Form, Field} from 'react-final-form';
 
+type FormNewPostType = {
+    newPostText: string
+}
 
 const MyPosts = (props: MyPostsPropsType) => {
     const postsElement = props.posts.map(p => <Post message={p.message}
                                                     likeValue={p.likeValue}/>);
 
-    const addPost = () => {
-        props.addPost();
-    }
-
-    const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let text = e.currentTarget.value;
-        props.newPostUpdate(text);
+    const addNewPost = (value: FormNewPostType) => {
+        props.addPost(value.newPostText)
     }
 
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
             <div>
-                <div>
-                    <textarea onChange={onPostChange}
-                              value={props.newPostText}/>
-                </div>
-                <div>
-                    <button onClick={addPost}>Add post</button>
-                    <button>Remove</button>
-                </div>
+                <AddPostForm onSubmit={addNewPost}/>
             </div>
             <div className={s.posts}>
                 {postsElement}
@@ -36,4 +28,24 @@ const MyPosts = (props: MyPostsPropsType) => {
         </div>
     )
 }
+
+export const AddPostForm = (props: any) => {
+    return (
+        <Form onSubmit={props.onSubmit}>
+            {({handleSubmit}) => (
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <Field component={'textarea'} name={'newPostText'} placeholder={'Enter your text'}/>
+                    </div>
+                    <div>
+                        <button>Add post</button>
+                        <button>Remove</button>
+                    </div>
+                </form>
+            )
+            }
+        </Form>
+    )
+}
+
 export default MyPosts;
