@@ -13,7 +13,6 @@ type MessageType = {
 export type InitialStateType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
-    newMessageBody: string
 }
 
 let initialState: InitialStateType = {
@@ -35,7 +34,6 @@ let initialState: InitialStateType = {
         {id: 6, message: 'Hi!'},
         {id: 7, message: 'Hi!'}
     ],
-    newMessageBody: ''
 }
 
 
@@ -46,22 +44,16 @@ const dialogsReducer = (state: InitialStateType = initialState, action: ActionTy
     };
     switch (action.type) {
         case 'SEND-MESSAGE':
-            const body = stateCopy.newMessageBody;
-            stateCopy.newMessageBody = '';
+            const body = action.newMessageBody;
             stateCopy.messages.push({id: 8, message: body});
             return stateCopy;
-        case 'UPDATE-NEW-MESSAGE-BODY': {
-            let stateCopy = {...state}
-            stateCopy.newMessageBody = action.body;
-            return stateCopy;
-        }
+
         default:
             return state;
     }
 }
 
-export const sendMessageAC = () => ({type: 'SEND-MESSAGE'}) as const
+export const sendMessageAC = (newMessageBody: string) => ({type: 'SEND-MESSAGE', newMessageBody}) as const
 
-export const updateNewMessageBodyAC = (body: string) => ({type: 'UPDATE-NEW-MESSAGE-BODY', body: body}) as const
 
 export default dialogsReducer;

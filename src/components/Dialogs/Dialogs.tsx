@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
@@ -12,6 +12,9 @@ import {Form, Field} from 'react-final-form';
     updateNewMessageBody: (body: string) => void
 }*/
 
+type FormMessageDataType = {
+    newMessageBody: string
+}
 const Dialogs: React.FC<DialogsPropsType> = (props) => {
 
     let dialogsElements = props.dialogsPage.dialogs.map(d => <DialogItem name={d.name}
@@ -19,16 +22,10 @@ const Dialogs: React.FC<DialogsPropsType> = (props) => {
                                                                          id={d.id}/>)
     let messagesElements = props.dialogsPage.messages.map(m => <Message message={m.message} key={m.id}/>)
 
-    let newMessageBody = props.dialogsPage.newMessageBody;
-    let onSendMessageClick = () => {
-        props.onSendMessageClick();
-    }
 
-    let updateNewMessageBody = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let body = e.currentTarget.value;
-        props.updateNewMessageBody(body);
+    const addNewMessage = (formData: FormMessageDataType) => {
+        props.onSendMessageClick(formData.newMessageBody)
     }
-
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
@@ -37,9 +34,7 @@ const Dialogs: React.FC<DialogsPropsType> = (props) => {
             <div className={s.messages}>
                 <div>{messagesElements}</div>
                 <div>
-                    <AddMessageForm newMessageBody={newMessageBody}
-                                    updateNewMessageBody={updateNewMessageBody}/>
-
+                    <AddMessageForm onSubmit={addNewMessage}/>
                 </div>
             </div>
         </div>
