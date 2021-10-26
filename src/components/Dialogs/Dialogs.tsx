@@ -3,6 +3,7 @@ import s from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 import {DialogsPropsType} from './DialogsContainer';
+import {Form, Field} from 'react-final-form';
 
 
 /*type DialogsPropsType = {
@@ -36,19 +37,31 @@ const Dialogs: React.FC<DialogsPropsType> = (props) => {
             <div className={s.messages}>
                 <div>{messagesElements}</div>
                 <div>
-                    <div>
-                    <textarea value={newMessageBody}
-                              onChange={updateNewMessageBody}
-                              placeholder={'Enter your message'}>
-                    </textarea>
-                    </div>
-                    <div>
-                        <button onClick={onSendMessageClick}>SEND</button>
-                    </div>
+                    <AddMessageForm newMessageBody={newMessageBody}
+                                    updateNewMessageBody={updateNewMessageBody}/>
+
                 </div>
             </div>
         </div>
     )
 }
+
+export const AddMessageForm = (props: any) => {
+    return (
+        <Form onSubmit={props.onSubmit}>
+            {({ handleSubmit }) => (
+                <form onSubmit={handleSubmit}>
+        <div>
+                 <Field component={'textarea'} name={'newMessageBody'}  placeholder={'Enter your message'}/>
+        </div>
+                    <div>
+                        <button>SEND</button>
+                    </div>
+        </form>
+            )}
+        </Form>
+    )
+}
+
 
 export default Dialogs;
