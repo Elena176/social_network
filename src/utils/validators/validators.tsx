@@ -1,10 +1,12 @@
 import React from 'react';
-export const required = (value: any) => {
-    if (value) return undefined;
-    return 'Field is required'
-}
 
-export const maxLengthCreator = (maxLength: number) => (value: string) => {
-    if (value.length > maxLength) return `Max length is ${maxLength} symbols`;
-    return undefined;
+export const validateAddPostForm = (values: string) => {
+    const maxLength = 20;
+    let errors;
+    if (!values) {
+        errors = 'Field is required';
+    } else if (values.length > maxLength) {
+        errors = `Max length is ${maxLength} symbols`;
+    }
+    return errors;
 }
