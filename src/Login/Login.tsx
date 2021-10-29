@@ -12,6 +12,7 @@ type FormDataType = {
 type LoginPropsType = {
     onSubmit: (formData: FormDataType) => void
 }
+
 const validateForm = (values: any) => {
     const errors = {};
     /*  if (!values.email) {
