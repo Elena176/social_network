@@ -3,7 +3,7 @@ import s from './MyPosts.module.css';
 import Post from './Post/Post';
 import {MyPostsPropsType} from './MyPostsContainer';
 import {Form, Field} from 'react-final-form';
-import {requiredField} from '../../../utils/validators/validators';
+import {maxLengthCreator, required} from '../../../utils/validators/validators';
 
 type FormNewPostType = {
     newPostText: string
@@ -36,7 +36,7 @@ export const AddPostForm = (props: any) => {
             {({handleSubmit}) => (
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <Field<string>  component={'textarea'} name={'newPostText'} placeholder={'Enter your text'} validate={requiredField}/>
+                        <Field<string>  component={'textarea'} name={'newPostText'} placeholder={'Enter your text'} validate={required}/>
                     </div>
                     <div>
                         <button>Add post</button>
