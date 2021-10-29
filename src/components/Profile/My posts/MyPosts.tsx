@@ -2,8 +2,7 @@ import React from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 import {MyPostsPropsType} from './MyPostsContainer';
-import {required} from '../../../utils/validators/validators';
-import {Field, Form, Formik } from 'formik';
+import {Field, Form, Formik} from 'formik';
 
 type FormNewPostType = {
     newPostText: string
@@ -22,7 +21,7 @@ const MyPosts = (props: MyPostsPropsType) => {
             <h3>My posts</h3>
             <div>
                 <AddPostFormFormik addNewPost={addNewPost}/>
-               {/* <AddPostForm onSubmit={addNewPost}/>*/}
+                {/* <AddPostForm onSubmit={addNewPost}/>*/}
             </div>
             <div className={s.posts}>
                 {postsElement}
@@ -35,38 +34,39 @@ type AddPostPropsType = {
     addNewPost: (value: FormNewPostType) => void
 }
 
-const validateForm = (values: any) => {
-    const errors = {};
-    /*  if (!values.email) {
-          errors.email = 'Required';
-      } else if (
-          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-      ) {
-          errors.email = 'Invalid email address';
-      }*/
+const validateTextArea = (values: string) => {
+    const maxLength = 20;
+    let errors;
+    if (!values) {
+        errors = 'Field is required';
+    } else if (values.length > maxLength) {
+        errors = `Max length is ${maxLength} symbols`;
+    }
     return errors;
 }
 
 
-
 export const AddPostFormFormik = (props: AddPostPropsType) => {
-    const submit = (values: FormNewPostType, { setSubmitting}: {setSubmitting: (isSubmitting: boolean) => void}) => {
+
+    const submit = (values: FormNewPostType, {setSubmitting}: { setSubmitting: (isSubmitting: boolean) => void }) => {
         props.addNewPost(values)
     }
     return <div>
         <Formik
-            initialValues={{ newPostText: ''}}
-            validate={validateForm}
+            initialValues={{newPostText: ''}}
             onSubmit={submit}
         >
-            {() => (
+            {({errors, touched}) => (
                 <Form>
                     <div>
-                        <Field  component={'textarea'} name={'newPostText'} placeholder={'Enter your text'} validate={required}/>
+                        <Field component={'textarea'} name={'newPostText'} placeholder={'Enter your text'}
+                               validate={validateTextArea}
+                        />
+                        {errors.newPostText && touched.newPostText && <div>{errors.newPostText}</div>}
                     </div>
                     <div>
-                        <button type={'button'}>Add post</button>
-                        <button type={'button'}>Remove</button>
+                        <button type={'submit'}>Add post</button>
+                        <button type={'submit'}>Remove</button>
                     </div>
                 </Form>
             )}

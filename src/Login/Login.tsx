@@ -49,7 +49,7 @@ export const LoginFormFormik = (props: LoginPropsType) => {
                         remember me
                     </div>
                     <div>
-                        <button type='button'>Login</button>
+                        <button type='submit'>Login</button>
                     </div>
                 </Form>
             )}

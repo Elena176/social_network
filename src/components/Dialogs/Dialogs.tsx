@@ -3,7 +3,7 @@ import s from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 import {DialogsPropsType} from './DialogsContainer';
-import {Field, Form, Formik } from 'formik';
+import {Field, Form, Formik} from 'formik';
 
 type FormMessageDataType = {
     newMessageBody: string
@@ -28,7 +28,7 @@ const Dialogs: React.FC<DialogsPropsType> = (props) => {
                 <div>{messagesElements}</div>
                 <div>
                     <AddMessageFormFormik addNewMessage={addNewMessage}/>
-                   {/* <AddMessageForm onSubmit={addNewMessage}/>*/}
+                    {/* <AddMessageForm onSubmit={addNewMessage}/>*/}
                 </div>
             </div>
         </div>
@@ -54,34 +54,37 @@ const Dialogs: React.FC<DialogsPropsType> = (props) => {
 
 const validateForm = (values: any) => {
     const errors = {};
-  /*  if (!values.email) {
-        errors.email = 'Required';
-    } else if (
-        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-    ) {
-        errors.email = 'Invalid email address';
-    }*/
+    /*  if (!values.email) {
+          errors.email = 'Required';
+      } else if (
+          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+      ) {
+          errors.email = 'Invalid email address';
+      }*/
     return errors;
 }
 
 type AddMessagePropsType = {
     addNewMessage: (formData: FormMessageDataType) => void
 }
+
 export const AddMessageFormFormik = (props: AddMessagePropsType) => {
-    const submit = (values: FormMessageDataType, { setSubmitting}: {setSubmitting: (isSubmitting: boolean) => void}) => {
+
+    const submit = (values: FormMessageDataType, {setSubmitting}: { setSubmitting: (isSubmitting: boolean) => void }) => {
+        console.log(values, 'VAlues')
         props.addNewMessage(values)
     }
     return <div>
         <Formik
-            initialValues={{ newMessageBody: ''}}
+            initialValues={{newMessageBody: ''}}
             validate={validateForm}
             onSubmit={submit}
         >
             {() => (
                 <Form>
-                    <Field component={'textarea'} name={'newMessageBody'}  placeholder={'Enter your message'}/>
+                    <Field component={'textarea'} name={'newMessageBody'} placeholder={'Enter your message'}/>
                     <div>
-                        <button type={'button'}>SEND</button>
+                        <button type={'submit'}>SEND</button>
                     </div>
                 </Form>
             )}
