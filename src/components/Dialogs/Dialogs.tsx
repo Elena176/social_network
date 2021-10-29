@@ -3,14 +3,7 @@ import s from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 import {DialogsPropsType} from './DialogsContainer';
-import {Form, Field} from 'react-final-form';
-
-
-/*type DialogsPropsType = {
-    dialogsPage: DialogsPageType
-    onSendMessageClick: () => void
-    updateNewMessageBody: (body: string) => void
-}*/
+import {Field, Form, Formik } from 'formik';
 
 type FormMessageDataType = {
     newMessageBody: string
@@ -34,14 +27,15 @@ const Dialogs: React.FC<DialogsPropsType> = (props) => {
             <div className={s.messages}>
                 <div>{messagesElements}</div>
                 <div>
-                    <AddMessageForm onSubmit={addNewMessage}/>
+                    <AddMessageFormFormik addNewMessage={addNewMessage}/>
+                   {/* <AddMessageForm onSubmit={addNewMessage}/>*/}
                 </div>
             </div>
         </div>
     )
 }
 
-export const AddMessageForm = (props: any) => {
+/*export const AddMessageForm = (props: any) => {
     return (
         <Form onSubmit={props.onSubmit}>
             {({ handleSubmit }) => (
@@ -56,6 +50,43 @@ export const AddMessageForm = (props: any) => {
             )}
         </Form>
     )
+}*/
+
+const validateForm = (values: any) => {
+    const errors = {};
+  /*  if (!values.email) {
+        errors.email = 'Required';
+    } else if (
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+    ) {
+        errors.email = 'Invalid email address';
+    }*/
+    return errors;
+}
+
+type AddMessagePropsType = {
+    addNewMessage: (formData: FormMessageDataType) => void
+}
+export const AddMessageFormFormik = (props: AddMessagePropsType) => {
+    const submit = (values: FormMessageDataType, { setSubmitting}: {setSubmitting: (isSubmitting: boolean) => void}) => {
+        props.addNewMessage(values)
+    }
+    return <div>
+        <Formik
+            initialValues={{ newMessageBody: ''}}
+            validate={validateForm}
+            onSubmit={submit}
+        >
+            {() => (
+                <Form>
+                    <Field component={'textarea'} name={'newMessageBody'}  placeholder={'Enter your message'}/>
+                    <div>
+                        <button type={'button'}>SEND</button>
+                    </div>
+                </Form>
+            )}
+        </Formik>
+    </div>
 }
 
 
