@@ -4,6 +4,7 @@ import Post from './Post/Post';
 import {MyPostsPropsType} from './MyPostsContainer';
 import {Field, Form, Formik} from 'formik';
 import {validateAddPostForm} from '../../../utils/validators/validators';
+import {Textarea} from '../../common/FormsControl/FormsControl';
 
 export type FormNewPostType = {
     newPostText: string
@@ -44,16 +45,15 @@ export const AddPostFormFormik = (props: AddPostPropsType) => {
             initialValues={{newPostText: ''}}
             onSubmit={submit}
         >
-            {({errors, touched}) => (
+            {() => (
                 <Form>
-                    <div >
+                    <div>
                         <Field
-                            component={'textarea'}
+                            component={Textarea}
                                validate={validateAddPostForm}
                                name={'newPostText'}
                                placeholder={'Enter your text'}
                         />
-                        {errors && touched && <div className={s.errorMessage}>{errors.newPostText}</div>}
                     </div>
 
                     <div>

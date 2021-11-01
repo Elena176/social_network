@@ -5,6 +5,6 @@
 .formControl.error textarea {
      border: solid red 2px;
 }
-.formControl.error span {
+.errorMessage{
      color: red;
 }

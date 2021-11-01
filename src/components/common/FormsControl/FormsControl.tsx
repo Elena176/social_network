@@ -1,13 +1,33 @@
 import s from './FormsControls.module.css'
 
-export const Textarea = ({field, form, ...props}: any ) => {
-    const hasError = form.touched && form.errors;
+export const Textarea = ({field, form: { touched, errors}, ...props}: any) => {
+
     return (
-    <div className={ s.formControl + '' + (hasError ? s.error : '')}>
         <div>
-        <textarea {...field}{...props}/>
+            <textarea
+                {...field} {...props}
+            />
+            {touched[field.name] && errors[field.name] && (
+                <div className={s.errorMessage}>{errors[field.name]}</div>
+            )}
         </div>
-        { hasError &&  <span> {form.errors.newMessageBody} </span> }
-    </div>
+    )
+}
+
+export const Input = ({field, form: { touched, errors, isValid}, ...props}: any) => {
+
+    return (
+        <div>
+            <input
+                type={'text'}
+                {...field} {...props}
+                className={
+                    !isValid && touched[field.name] && errors[field.name] ? s.error : ""
+                }
+            />
+            {  !isValid && touched[field.name] && errors[field.name] && (
+                <div className={s.error}>{errors[field.name]}</div>
+            )}
+        </div>
     )
 }

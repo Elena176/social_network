@@ -5,6 +5,7 @@ import Message from './Message/Message';
 import {DialogsPropsType} from './DialogsContainer';
 import {Field, Form, Formik} from 'formik';
 import {validateAddPostForm} from '../../utils/validators/validators';
+import {Textarea} from '../common/FormsControl/FormsControl';
 
 export type FormMessageDataType = {
     newMessageBody: string
@@ -49,14 +50,13 @@ export const AddMessageFormFormik = (props: AddMessagePropsType) => {
             initialValues={{newMessageBody: ''}}
             onSubmit={submit}
         >
-            {({errors, touched}) => (
+            {() => (
                 <Form>
                     <div>
-                        <Field component={'textarea'}
+                        <Field component={Textarea}
                                validate={validateAddPostForm}
                                name={'newMessageBody'}
                                placeholder={'Enter your message'}/>
-                        {errors && touched && <div className={s.errorMessage}>{errors.newMessageBody}</div>}
                     </div>
                     <div>
                         <button type={'submit'}>SEND</button>
