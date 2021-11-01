@@ -10,7 +10,7 @@ export const validateAddPostMessageForm = (values: string) => {
 }
 
 export const validateLoginForm = (values: string) => {
-    const maxLength = 10;
+    const maxLength = 30;
     let errors;
     if (!values) {
         errors = 'Field is required';

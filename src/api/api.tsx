@@ -16,31 +16,37 @@ const instance = axios.create({
 });
 
 export const authAPI = {
-     me() {
-         return instance.get<DataLoginPropsType>(`auth/me`)
-     },
+    me() {
+        return instance.get<DataLoginPropsType>(`auth/me`);
+    },
+    login(email: string, password: string, rememberMe: boolean) {
+        return instance.post<any>(`auth/login`, {email, password, rememberMe});
+    },
+    logout() {
+        return instance.delete<any>(`auth/login`);
+    },
 }
 
 export const usersAPI = {
     getUsers(currentPage: number, pageSize: number) {
-        return instance.get<DataUsersPropsType>(`users?page=${currentPage}&count=${pageSize}`).then(response => response.data)
+        return instance.get<DataUsersPropsType>(`users?page=${currentPage}&count=${pageSize}`).then(response => response.data);
     },
     follow(userId: number) {
-        return instance.post<FollowUserPropsType>(`follow/${userId}`)
+        return instance.post<FollowUserPropsType>(`follow/${userId}`);
     },
     unfollow(userId: number) {
-        return  instance.delete<FollowUserPropsType> (`follow/${userId}`)
+        return  instance.delete<FollowUserPropsType> (`follow/${userId}`);
     }
 };
 
 export const profileAPI = {
     getProfile (userId: string) {
-        return  instance.get<ProfileUserType>( `profile/` + userId).then(response => response.data)
+        return  instance.get<ProfileUserType>( `profile/` + userId).then(response => response.data);
     },
     getStatus(userId: string) {
         return instance.get<string>(`profile/status/` + userId);
     },
     updateStatus(status: string) {
-        return instance.put<StatusPropsType>(`profile/status`, {status: status})
+        return instance.put<StatusPropsType>(`profile/status`, {status: status});
     },
 };

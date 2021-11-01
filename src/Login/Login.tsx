@@ -2,14 +2,17 @@ import React from 'react';
 import {Field, Form, Formik} from 'formik';
 import {Input} from '../components/common/FormsControl/FormsControl';
 import {validateLoginForm} from '../utils/validators/validators';
+import {connect} from 'react-redux';
+import {login} from '../redux/auth-reducer';
+import {Redirect} from 'react-router-dom';
 
 type FormDataType = {
-    login: string
+    email: string
     password: string
     rememberMe: boolean
 }
 
-type LoginPropsType = {
+type LoginFormPropsType = {
     onSubmit: (formData: FormDataType) => void
 }
 
@@ -26,20 +29,20 @@ const validateForm = (values: any) => {
 }
 
 
-export const LoginFormFormik = (props: LoginPropsType) => {
+export const LoginFormFormik = (props: LoginFormPropsType) => {
     const submit = (values: FormDataType, {setSubmitting}: { setSubmitting: (isSubmitting: boolean) => void }) => {
         props.onSubmit(values)
     }
     return <div>
         <Formik
-            initialValues={{login: '', password: '', rememberMe: false}}
+            initialValues={{email: '', password: '', rememberMe: false}}
             onSubmit={submit}
         >
             {() => (
                 <Form>
                     <div>
-                        <Field component={Input} type={'text'} validate={validateLoginForm} name={'login'}
-                               placeholder={'Login'}/>
+                        <Field component={Input} type={'text'} validate={validateLoginForm} name={'email'}
+                               placeholder={'email'}/>
                     </div>
                     <div>
                         <Field component={Input} type={'password'} validate={validateLoginForm} name={'password'}
@@ -58,13 +61,18 @@ export const LoginFormFormik = (props: LoginPropsType) => {
     </div>
 }
 
-export const Login = () => {
+const Login = (props: any) => {
     const onSubmit = (formData: FormDataType) => {
-        console.log(formData)
+        debugger;
+        props.login(formData.email, formData.password, formData.rememberMe)
     }
-
+/*if (props.isAuth) {
+    return <Redirect to={'/profile'}/>
+}*/
     return <div>
         <h1>LOGIN</h1>
         <LoginFormFormik onSubmit={onSubmit}/>
     </div>
 }
+
+export default connect(null, {login})(Login);
