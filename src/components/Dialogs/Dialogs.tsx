@@ -4,8 +4,9 @@ import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 import {DialogsPropsType} from './DialogsContainer';
 import {Field, Form, Formik} from 'formik';
+import {validateAddPostForm} from '../../utils/validators/validators';
 
-type FormMessageDataType = {
+export type FormMessageDataType = {
     newMessageBody: string
 }
 const Dialogs: React.FC<DialogsPropsType> = (props) => {
@@ -28,40 +29,10 @@ const Dialogs: React.FC<DialogsPropsType> = (props) => {
                 <div>{messagesElements}</div>
                 <div>
                     <AddMessageFormFormik addNewMessage={addNewMessage}/>
-                    {/* <AddMessageForm onSubmit={addNewMessage}/>*/}
                 </div>
             </div>
         </div>
     )
-}
-
-/*export const AddMessageForm = (props: any) => {
-    return (
-        <Form onSubmit={props.onSubmit}>
-            {({ handleSubmit }) => (
-                <form onSubmit={handleSubmit}>
-        <div>
-                 <Field component={'textarea'} name={'newMessageBody'}  placeholder={'Enter your message'}/>
-        </div>
-                    <div>
-                        <button>SEND</button>
-                    </div>
-        </form>
-            )}
-        </Form>
-    )
-}*/
-
-const validateForm = (values: any) => {
-    const errors = {};
-    /*  if (!values.email) {
-          errors.email = 'Required';
-      } else if (
-          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-      ) {
-          errors.email = 'Invalid email address';
-      }*/
-    return errors;
 }
 
 type AddMessagePropsType = {
@@ -71,18 +42,22 @@ type AddMessagePropsType = {
 export const AddMessageFormFormik = (props: AddMessagePropsType) => {
 
     const submit = (values: FormMessageDataType, {setSubmitting}: { setSubmitting: (isSubmitting: boolean) => void }) => {
-        console.log(values, 'VAlues')
         props.addNewMessage(values)
     }
     return <div>
         <Formik
             initialValues={{newMessageBody: ''}}
-            validate={validateForm}
             onSubmit={submit}
         >
-            {() => (
+            {({errors, touched}) => (
                 <Form>
-                    <Field component={'textarea'} name={'newMessageBody'} placeholder={'Enter your message'}/>
+                    <div>
+                        <Field component={'textarea'}
+                               validate={validateAddPostForm}
+                               name={'newMessageBody'}
+                               placeholder={'Enter your message'}/>
+                        {errors && touched && <div className={s.errorMessage}>{errors.newMessageBody}</div>}
+                    </div>
                     <div>
                         <button type={'submit'}>SEND</button>
                     </div>
