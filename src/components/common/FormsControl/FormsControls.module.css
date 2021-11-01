@@ -1,8 +1,7 @@
-/*.formControl {
-     border: solid black 1px;
-}*/
-.formControl.error input,
-.formControl.error textarea {
+.formControl {
+     border: none;
+}
+.error  {
      border: solid red 2px;
 }
 .errorMessage{

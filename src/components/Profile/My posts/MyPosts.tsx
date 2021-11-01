@@ -3,7 +3,7 @@ import s from './MyPosts.module.css';
 import Post from './Post/Post';
 import {MyPostsPropsType} from './MyPostsContainer';
 import {Field, Form, Formik} from 'formik';
-import {validateAddPostForm} from '../../../utils/validators/validators';
+import {validateAddPostMessageForm} from '../../../utils/validators/validators';
 import {Textarea} from '../../common/FormsControl/FormsControl';
 
 export type FormNewPostType = {
@@ -50,7 +50,7 @@ export const AddPostFormFormik = (props: AddPostPropsType) => {
                     <div>
                         <Field
                             component={Textarea}
-                               validate={validateAddPostForm}
+                               validate={validateAddPostMessageForm}
                                name={'newPostText'}
                                placeholder={'Enter your text'}
                         />

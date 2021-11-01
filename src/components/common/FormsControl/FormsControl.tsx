@@ -1,7 +1,6 @@
 import s from './FormsControls.module.css'
 
 export const Textarea = ({field, form: { touched, errors}, ...props}: any) => {
-
     return (
         <div>
             <textarea
@@ -19,14 +18,13 @@ export const Input = ({field, form: { touched, errors, isValid}, ...props}: any)
     return (
         <div>
             <input
-                type={'text'}
                 {...field} {...props}
                 className={
                     !isValid && touched[field.name] && errors[field.name] ? s.error : ""
                 }
             />
-            {  !isValid && touched[field.name] && errors[field.name] && (
-                <div className={s.error}>{errors[field.name]}</div>
+            { !isValid && touched[field.name] && errors[field.name] && (
+                <div className={s.errorMessage}>{errors[field.name]}</div>
             )}
         </div>
     )

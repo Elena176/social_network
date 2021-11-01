@@ -4,7 +4,7 @@ import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 import {DialogsPropsType} from './DialogsContainer';
 import {Field, Form, Formik} from 'formik';
-import {validateAddPostForm} from '../../utils/validators/validators';
+import {validateAddPostMessageForm} from '../../utils/validators/validators';
 import {Textarea} from '../common/FormsControl/FormsControl';
 
 export type FormMessageDataType = {
@@ -54,7 +54,7 @@ export const AddMessageFormFormik = (props: AddMessagePropsType) => {
                 <Form>
                     <div>
                         <Field component={Textarea}
-                               validate={validateAddPostForm}
+                               validate={validateAddPostMessageForm}
                                name={'newMessageBody'}
                                placeholder={'Enter your message'}/>
                     </div>
