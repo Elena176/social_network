@@ -45,13 +45,12 @@ export const AddPostFormFormik = (props: AddPostPropsType) => {
             initialValues={{newPostText: ''}}
             onSubmit={submit}
         >
-            {({errors, touched}) => (
+            {() => (
                 <Form>
                     <div>
                         <Field component={Textarea} name={'newPostText'} placeholder={'Enter your text'}
                                validate={validateAddPostForm}
                         />
-                        {errors.newPostText && touched.newPostText && <div>{errors.newPostText}</div>}
                     </div>
                     <div>
                         <button type={'submit'}>Add post</button>

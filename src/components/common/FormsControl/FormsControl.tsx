@@ -1,11 +1,14 @@
 import s from './FormsControls.module.css'
 
-
 export const Textarea = ({field, form, ...props}: any) => {
+    const hasError = form.touched && form.errors;
     return (
-    <div className={s.error}>
+    <div className={ s.formControl + '' + (hasError ? s.error : '')}>
+        <div>
         <textarea {...field}{...props}/>
-       {/* { form.touched && form.errors &&  <span> {form.errors}</span> }*/}
+        </div>
+        { hasError &&  <span> {form.errors.newPostText} </span> }
+
     </div>
     )
 }
