@@ -3,8 +3,9 @@ import {Field, Form, Formik} from 'formik';
 import {Input} from '../components/common/FormsControl/FormsControl';
 import {validateLoginForm} from '../utils/validators/validators';
 import {connect} from 'react-redux';
-import {login} from '../redux/auth-reducer';
+import {logIn} from '../redux/auth-reducer';
 import {Redirect} from 'react-router-dom';
+import {AppStateType} from '../redux/redux-store';
 
 type FormDataType = {
     email: string
@@ -16,6 +17,15 @@ type LoginFormPropsType = {
     onSubmit: (formData: FormDataType) => void
 }
 
+type MapStatePropsType = {
+    isAuth: boolean
+}
+
+type MapDispatchPropsType = {
+    logIn: (email: string, password: string, rememberMe: boolean) => void
+}
+
+type LoginPropsType = MapStatePropsType & MapDispatchPropsType
 const validateForm = (values: any) => {
     const errors = {};
     /*  if (!values.email) {
@@ -61,18 +71,22 @@ export const LoginFormFormik = (props: LoginFormPropsType) => {
     </div>
 }
 
-const Login = (props: any) => {
+const Login = (props: LoginPropsType) => {
     const onSubmit = (formData: FormDataType) => {
-        debugger;
-        props.login(formData.email, formData.password, formData.rememberMe)
+        props.logIn(formData.email, formData.password, formData.rememberMe)
     }
-/*if (props.isAuth) {
+if (!props.isAuth) {
     return <Redirect to={'/profile'}/>
-}*/
+}
     return <div>
         <h1>LOGIN</h1>
         <LoginFormFormik onSubmit={onSubmit}/>
     </div>
 }
 
-export default connect(null, {login})(Login);
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        isAuth: state.auth.isAuth
+    }
+}
+export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {logIn})(Login);
