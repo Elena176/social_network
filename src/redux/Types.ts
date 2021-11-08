@@ -48,14 +48,19 @@ export type ProfileUserType = null | {
     }
 }
 
-export type DataPropsType = null | {
-    id: number
-    email: string
-    login: string
-}
-
+/*export type DataPropsType = {
+    payload: {
+        id: number
+        email: string
+        login: string
+    }
+}*/
 export type DataLoginPropsType = {
-    data: null | DataPropsType
+    data: {
+        id: number
+        email: string
+        login: string
+    }
     resultCode: number
     messages: string[]
 }

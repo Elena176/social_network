@@ -1,16 +1,25 @@
 import {authAPI} from '../api/api';
-import {ActionTypes, DataPropsType} from './Types';
+import {ActionTypes} from './Types';
 import {ThunkDispatch} from 'redux-thunk';
 import {AppStateType} from './redux-store';
 
+
 export type InitialStateDataType = {
-    data: DataPropsType
+
+    id: null | number
+    login: null | string
+    email: null | string
     isAuth: boolean
+
 }
 
 let initialState: InitialStateDataType = {
-    data: null,
-    isAuth: false,
+
+        id: null,
+        login: null,
+        email: null,
+        isAuth: false,
+
 }
 //{login, email, id}
 
@@ -20,8 +29,8 @@ const authReducer = (state: InitialStateDataType = initialState, action: ActionT
         case 'SET-USER-DATA':
             return {
                 ...state,
-                data: action.data,
-              //  isAuth: true
+                ...action.payload,
+                //isAuth: true
             }
 
         default:
@@ -29,13 +38,17 @@ const authReducer = (state: InitialStateDataType = initialState, action: ActionT
     }
 }
 
-export const setAuthUserData = (data: DataPropsType, isAuth: boolean) => ({type: 'SET-USER-DATA', data, isAuth}) as const
+export const setAuthUserData = (id: number | null, login: string | null, email: string | null, isAuth: boolean) => ({
+    type: 'SET-USER-DATA',
+    payload: {id, login, email, isAuth}
+} as const)
 
 export const getAuthUserData = () => (dispatch: ThunkDispatch<AppStateType, undefined, ActionTypes>) => {
     authAPI.me()
         .then(response => {
             if (response.data.resultCode === 0) {                     //проверка залогинен пользователь или нет
-                dispatch(setAuthUserData(response.data.data, true));
+                let {id, login, email} = response.data.data
+                    dispatch(setAuthUserData(id, login, email, true));
             }
         });
 }
@@ -43,7 +56,8 @@ export const getAuthUserData = () => (dispatch: ThunkDispatch<AppStateType, unde
 export const logIn = (email: string, password: string, rememberMe: boolean) => (dispatch: ThunkDispatch<AppStateType, undefined, ActionTypes>) => {
     authAPI.login(email, password, rememberMe)
         .then(response => {
-            if (response.data.resultCode === 0) {                     dispatch(getAuthUserData())
+            if (response.data.resultCode === 0) {
+                dispatch(getAuthUserData())
             }
         });
 }
@@ -51,7 +65,8 @@ export const logIn = (email: string, password: string, rememberMe: boolean) => (
 export const logOut = () => (dispatch: ThunkDispatch<AppStateType, undefined, ActionTypes>) => {
     authAPI.logout()
         .then(response => {
-            if (response.data.resultCode === 0) {                     dispatch(setAuthUserData(null, false))
+            if (response.data.resultCode === 0) {
+                dispatch(setAuthUserData(null, null, null, false))
             }
         });
 }
