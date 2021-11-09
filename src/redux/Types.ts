@@ -9,6 +9,7 @@ import {
     unfollowSuccess
 } from './users-reducer';
 import {setAuthUserData, setErrorMessage} from './auth-reducer';
+import {initializedSuccess} from './app-reducer';
 
 type locationPropsType = {
     city: string
@@ -97,3 +98,4 @@ export type ActionTypes = ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof toggleIsFollowingProgress>
     | ReturnType<typeof setStatus>
     | ReturnType<typeof setErrorMessage>
+    | ReturnType<typeof initializedSuccess>

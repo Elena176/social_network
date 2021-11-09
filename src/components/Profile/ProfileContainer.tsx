@@ -6,7 +6,7 @@ import {getProfile, getUserStatus, updateUserStatus} from '../../redux/profile-r
 import {RouteComponentProps, withRouter } from 'react-router';
 import {compose} from 'redux';
 import {ProfileUserType} from '../../redux/Types';
-import {withAuthRedirect} from '../../hoc/withAuthRedirect';
+//import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 type PathParamsType = {
     userId: string
@@ -15,7 +15,7 @@ type PathParamsType = {
 type MapStateToPropsType = {
     profile: ProfileUserType
     status: string
-    authorizedUserId: number
+    authorizedUserId: number | null
     isAuth: boolean
 }
 

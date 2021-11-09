@@ -1,13 +1,14 @@
 import React from 'react';
 import {Field, Form, Formik} from 'formik';
 import {Input} from '../components/common/FormsControl/FormsControl';
-import {validateLoginForm} from '../utils/validators/validators';
+import {validateAddPostMessageForm, validateLoginForm} from '../utils/validators/validators';
 import {connect} from 'react-redux';
 import {logIn} from '../redux/auth-reducer';
 import {Redirect} from 'react-router-dom';
 import {AppStateType} from '../redux/redux-store';
 import s from './../components/common/FormsControl/FormsControls.module.css';
 
+const validateItem = validateAddPostMessageForm(30) ;
 type FormDataType = {
     email: string
     password: string
@@ -55,20 +56,20 @@ export const LoginFormFormik = (props: LoginFormPropsType) => {
             {({isSubmitting}) => (
                 <Form>
                     <div>
-                        <Field component={Input} type={'text'} validate={validateLoginForm} name={'email'}
+                        <Field component={Input} type={'text'} validate={validateItem} name={'email'}
                                placeholder={'email'}/>
                     </div>
                     <div>
                         <Field component={Input} type={'password'} validate={validateLoginForm} name={'password'}
                                placeholder={'password'}/>
                     </div>
-                    <label>
+                    <label className={''}>
                         <Field component={Input} type={'checkbox'} name={'rememberMe'}/>
                         remember me
                     </label>
-
-                        {props.error &&  <div className={s.errorMessage}> {props.error} </div>}
-
+                    <div>
+                        {props.error && <div className={s.errorMessage}> {props.error} </div>}
+                    </div>
                     <div>
                         <button type="submit" disabled={isSubmitting}>Login</button>
                     </div>

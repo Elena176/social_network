@@ -11,7 +11,6 @@ import {
 } from '../../redux/users-reducer';
 import {UsersFunctionComponent} from './UsersFunctionComponent';
 import {Preloader} from '../common/Preloader/Preloader';
-import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
 import {UserType} from '../../redux/Types';
 
@@ -45,7 +44,6 @@ class UsersContainer extends React.Component <UsersPropsType> {
     componentDidMount() {
 this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize);
     };
-
 
     onPageChanged = (pageNumber: number) => {
         this.props.onPageChanged(pageNumber, this.props.pageSize)
@@ -116,5 +114,4 @@ export default compose<React.ComponentType>(
         unFollow,
         onPageChanged,
     }),
-    withAuthRedirect,
 )(UsersContainer);

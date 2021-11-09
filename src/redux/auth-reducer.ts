@@ -48,7 +48,7 @@ export const setAuthUserData = (id: number | null, login: string | null, email: 
 export const setErrorMessage = (error: string | null) => ({type: 'SET_ERROR_MESSAGE', error} as const)
 
 export const getAuthUserData = () => (dispatch: ThunkDispatch<AppStateType, undefined, ActionTypes>) => {
-    authAPI.me()
+   return authAPI.me()
         .then(response => {
             if (response.data.resultCode === 0) {                     //проверка залогинен пользователь или нет
                 let {id, login, email} = response.data.data

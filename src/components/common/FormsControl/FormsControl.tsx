@@ -1,10 +1,13 @@
 import s from './FormsControls.module.css'
 
-export const Textarea = ({field, form: { touched, errors}, ...props}: any) => {
+export const Textarea = ({field, form: { touched, errors, isValid}, ...props}: any) => {
     return (
         <div>
             <textarea
                 {...field} {...props}
+                className={
+                    !isValid && touched[field.name] && errors[field.name] ? s.error : ""
+                }
             />
             {touched[field.name] && errors[field.name] && (
                 <div className={s.errorMessage}>{errors[field.name]}</div>

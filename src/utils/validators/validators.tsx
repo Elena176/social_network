@@ -1,5 +1,4 @@
-export const validateAddPostMessageForm = (values: string) => {
-    const maxLength = 20;
+export const validateAddPostMessageForm = (maxLength: number) => (values: string) => {
     let errors;
     if (!values) {
         errors = 'Field is required';

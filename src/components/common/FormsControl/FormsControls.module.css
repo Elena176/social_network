@@ -2,6 +2,7 @@
      border: none;
 }
 .error  {
+     outline: none;
      border: solid red 2px;
 }
 .errorMessage{
