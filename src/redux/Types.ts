@@ -8,7 +8,7 @@ import {
     toggleIsFetching, toggleIsFollowingProgress,
     unfollowSuccess
 } from './users-reducer';
-import {setAuthUserData} from './auth-reducer';
+import {setAuthUserData, setErrorMessage} from './auth-reducer';
 
 type locationPropsType = {
     city: string
@@ -96,3 +96,4 @@ export type ActionTypes = ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof setAuthUserData>
     | ReturnType<typeof toggleIsFollowingProgress>
     | ReturnType<typeof setStatus>
+    | ReturnType<typeof setErrorMessage>

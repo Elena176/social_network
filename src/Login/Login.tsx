@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {logIn} from '../redux/auth-reducer';
 import {Redirect} from 'react-router-dom';
 import {AppStateType} from '../redux/redux-store';
+import s from './../components/common/FormsControl/FormsControls.module.css';
 
 type FormDataType = {
     email: string
@@ -15,10 +16,12 @@ type FormDataType = {
 
 type LoginFormPropsType = {
     onSubmit: (formData: FormDataType) => void
+    error: string | null
 }
 
 type MapStatePropsType = {
     isAuth: boolean
+    error: string | null
 }
 
 type MapDispatchPropsType = {
@@ -42,13 +45,14 @@ const validateForm = (values: any) => {
 export const LoginFormFormik = (props: LoginFormPropsType) => {
     const submit = (values: FormDataType, {setSubmitting}: { setSubmitting: (isSubmitting: boolean) => void }) => {
         props.onSubmit(values)
+        setSubmitting(false)
     }
     return <div>
         <Formik
             initialValues={{email: '', password: '', rememberMe: false}}
             onSubmit={submit}
         >
-            {() => (
+            {({isSubmitting}) => (
                 <Form>
                     <div>
                         <Field component={Input} type={'text'} validate={validateLoginForm} name={'email'}
@@ -58,12 +62,15 @@ export const LoginFormFormik = (props: LoginFormPropsType) => {
                         <Field component={Input} type={'password'} validate={validateLoginForm} name={'password'}
                                placeholder={'password'}/>
                     </div>
-                    <div>
+                    <label>
                         <Field component={Input} type={'checkbox'} name={'rememberMe'}/>
                         remember me
-                    </div>
+                    </label>
+
+                        {props.error &&  <div className={s.errorMessage}> {props.error} </div>}
+
                     <div>
-                        <button type="submit">Login</button>
+                        <button type="submit" disabled={isSubmitting}>Login</button>
                     </div>
                 </Form>
             )}
@@ -75,18 +82,19 @@ const Login = (props: LoginPropsType) => {
     const onSubmit = (formData: FormDataType) => {
         props.logIn(formData.email, formData.password, formData.rememberMe)
     }
-if (props.isAuth) {
-    return <Redirect to={'/profile'}/>
-}
+    if (props.isAuth) {
+        return <Redirect to={'/profile'}/>
+    }
     return <div>
         <h1>LOGIN</h1>
-        <LoginFormFormik onSubmit={onSubmit}/>
+        <LoginFormFormik onSubmit={onSubmit} error={props.error}/>
     </div>
 }
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
+        error: state.auth.error,
     }
 }
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {logIn})(Login);
