@@ -10,27 +10,44 @@ import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './Login/Login';
+import {connect} from 'react-redux';
+import {AppStateType} from './redux/redux-store';
+import {getAuthUserData} from './redux/auth-reducer';
+import {withRouter} from 'react-router';
+import {compose} from 'redux';
 
+type AppPropsType = MapDispatchToPropsType
+type MapDispatchToPropsType = {
+    getAuthUserData: () => void
+}
+class App extends React.Component<AppPropsType> {
 
+    componentDidMount() {
+        this.props.getAuthUserData();
+    }
 
-const App = () => {
-    return (
-        <div className='app-wrapper'>
-            <HeaderContainer />
-            <Navbar/>
-            <div className='app-wrapper-content'>
-                <Route path='/profile/:userId?'
-                       render={() => <ProfileContainer />}/>
-                <Route path='/dialogs'
-                       render={() => <DialogsContainer/>}/>
-                <Route path='/users' render={() => <UsersContainer />}/>
-                <Route path='/news' render={() => <News/>}/>
-                <Route path='/music' render={() => <Music/>}/>
-                <Route path='/settings' render={() => <Settings/>}/>
-                <Route path='/login' render={() => <Login />}/>
+    render() {
+        return (
+            <div className="app-wrapper">
+                <HeaderContainer/>
+                <Navbar/>
+                <div className="app-wrapper-content">
+                    <Route path="/profile/:userId?"
+                           render={() => <ProfileContainer/>}/>
+                    <Route path="/dialogs"
+                           render={() => <DialogsContainer/>}/>
+                    <Route path="/users" render={() => <UsersContainer/>}/>
+                    <Route path="/news" render={() => <News/>}/>
+                    <Route path="/music" render={() => <Music/>}/>
+                    <Route path="/settings" render={() => <Settings/>}/>
+                    <Route path="/login" render={() => <Login/>}/>
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
-export default App;
+
+export default compose(
+    withRouter,
+    connect<{}, MapDispatchToPropsType, {}, AppStateType>(null, {getAuthUserData}))(App);
