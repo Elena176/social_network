@@ -64,11 +64,8 @@ export const logIn = (email: string, password: string, rememberMe: boolean) => (
             if (response.data.resultCode === 0) {
                 dispatch(getAuthUserData())
             } else {
-                if (response.data.messages.length) {
-                    dispatch(setErrorMessage(response.data.messages[0]));
-                } else {
-                    dispatch(setErrorMessage('some error'));
-                }
+                let message = response.data.messages.length > 0 ? response.data.messages[0] : 'some error';
+                dispatch(setErrorMessage(message));
             }
         });
 }
