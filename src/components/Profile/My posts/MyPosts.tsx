@@ -3,13 +3,10 @@ import s from './MyPosts.module.css';
 import Post from './Post/Post';
 import {MyPostsPropsType} from './MyPostsContainer';
 import {Field, Form, Formik} from 'formik';
-import {validateAddPostMessageForm} from '../../../utils/validators/validators';
+import {validateItem} from '../../../utils/validators/validators';
 import {Textarea} from '../../common/FormsControl/FormsControl';
 
-export type FormNewPostType = {
-    newPostText: string
-}
-
+const validateAddPostMessageForm = validateItem(30) ;
 const MyPosts = (props: MyPostsPropsType) => {
     const postsElement = props.posts.map(p => <Post message={p.message}
                                                     likeValue={p.likeValue}/>);
@@ -67,3 +64,8 @@ export const AddPostFormFormik = (props: AddPostPropsType) => {
 }
 
 export default MyPosts;
+
+//types;
+export type FormNewPostType = {
+    newPostText: string
+}

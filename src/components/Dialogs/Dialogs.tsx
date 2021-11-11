@@ -4,12 +4,11 @@ import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 import {DialogsPropsType} from './DialogsContainer';
 import {Field, Form, Formik} from 'formik';
-import {validateAddPostMessageForm} from '../../utils/validators/validators';
+import {validateItem} from '../../utils/validators/validators';
 import {Textarea} from '../common/FormsControl/FormsControl';
 
-export type FormMessageDataType = {
-    newMessageBody: string
-}
+const validateFormMessage = validateItem(100);
+
 const Dialogs: React.FC<DialogsPropsType> = (props) => {
 
     let dialogsElements = props.dialogsPage.dialogs.map(d => <DialogItem name={d.name}
@@ -36,12 +35,7 @@ const Dialogs: React.FC<DialogsPropsType> = (props) => {
     )
 }
 
-type AddMessagePropsType = {
-    addNewMessage: (formData: FormMessageDataType) => void
-}
-
 export const AddMessageFormFormik = (props: AddMessagePropsType) => {
-
     const submit = (values: FormMessageDataType, {setSubmitting}: { setSubmitting: (isSubmitting: boolean) => void }) => {
         props.addNewMessage(values)
     }
@@ -54,7 +48,7 @@ export const AddMessageFormFormik = (props: AddMessagePropsType) => {
                 <Form>
                     <div>
                         <Field component={Textarea}
-                               validate={validateAddPostMessageForm}
+                               validate={validateFormMessage}
                                name={'newMessageBody'}
                                placeholder={'Enter your message'}/>
                     </div>
@@ -66,6 +60,13 @@ export const AddMessageFormFormik = (props: AddMessagePropsType) => {
         </Formik>
     </div>
 }
-
-
 export default Dialogs;
+
+//types;
+export type FormMessageDataType = {
+    newMessageBody: string
+}
+
+type AddMessagePropsType = {
+    addNewMessage: (formData: FormMessageDataType) => void
+}

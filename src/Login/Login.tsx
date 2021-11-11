@@ -1,47 +1,14 @@
 import React from 'react';
 import {Field, Form, Formik} from 'formik';
 import {Input} from '../components/common/FormsControl/FormsControl';
-import {validateAddPostMessageForm, validateLoginForm} from '../utils/validators/validators';
+import {validateItem} from '../utils/validators/validators';
 import {connect} from 'react-redux';
 import {logIn} from '../redux/auth-reducer';
 import {Redirect} from 'react-router-dom';
 import {AppStateType} from '../redux/redux-store';
 import s from './../components/common/FormsControl/FormsControls.module.css';
 
-const validateItem = validateAddPostMessageForm(30) ;
-type FormDataType = {
-    email: string
-    password: string
-    rememberMe: boolean
-}
-
-type LoginFormPropsType = {
-    onSubmit: (formData: FormDataType) => void
-    error: string | null
-}
-
-type MapStatePropsType = {
-    isAuth: boolean
-    error: string | null
-}
-
-type MapDispatchPropsType = {
-    logIn: (email: string, password: string, rememberMe: boolean) => void
-}
-
-type LoginPropsType = MapStatePropsType & MapDispatchPropsType
-const validateForm = (values: any) => {
-    const errors = {};
-    /*  if (!values.email) {
-          errors.email = 'Required';
-      } else if (
-          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-      ) {
-          errors.email = 'Invalid email address';
-      }*/
-    return errors;
-}
-
+const validateLoginForm = validateItem(20)
 
 export const LoginFormFormik = (props: LoginFormPropsType) => {
     const submit = (values: FormDataType, {setSubmitting}: { setSubmitting: (isSubmitting: boolean) => void }) => {
@@ -99,3 +66,27 @@ const mapStateToProps = (state: AppStateType) => {
     }
 }
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, {logIn})(Login);
+
+
+//types
+type FormDataType = {
+    email: string
+    password: string
+    rememberMe: boolean
+}
+
+type LoginFormPropsType = {
+    onSubmit: (formData: FormDataType) => void
+    error: string | null
+}
+
+type MapStatePropsType = {
+    isAuth: boolean
+    error: string | null
+}
+
+type MapDispatchPropsType = {
+    logIn: (email: string, password: string, rememberMe: boolean) => void
+}
+
+type LoginPropsType = MapStatePropsType & MapDispatchPropsType;
