@@ -8,7 +8,7 @@ import {Redirect} from 'react-router-dom';
 import {AppStateType} from '../redux/redux-store';
 import s from './../components/common/FormsControl/FormsControls.module.css';
 
-const validateLoginForm = validateItem(20)
+const validateLoginForm = validateItem(30)
 
 export const LoginFormFormik = (props: LoginFormPropsType) => {
     const submit = (values: FormDataType, {setSubmitting}: { setSubmitting: (isSubmitting: boolean) => void }) => {
@@ -23,7 +23,7 @@ export const LoginFormFormik = (props: LoginFormPropsType) => {
             {({isSubmitting}) => (
                 <Form>
                     <div>
-                        <Field component={Input} type={'text'} validate={validateItem} name={'email'}
+                        <Field component={Input} type={'text'} validate={validateLoginForm} name={'email'}
                                placeholder={'email'}/>
                     </div>
                     <div>

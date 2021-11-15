@@ -102,10 +102,11 @@ export const toggleIsFetching = (isFetching:boolean) => ({type: TOGGLE_IS_FETCHI
 
 export const toggleIsFollowingProgress = (isFetching:boolean, userId: number) => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId}) as const
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
+export const getUsersThunkCreator = (page: number, pageSize: number) => {
     return (dispatch: any) => {
         dispatch(toggleIsFetching(true))
-        usersAPI.getUsers(currentPage, pageSize).then(data => {
+        dispatch(setCurrentPage(page))
+        usersAPI.requestUsers(page, pageSize).then(data => {
             dispatch(toggleIsFetching(false))                  // после ответа убираем preloader
             dispatch(setUsers(data.items))
             //dispatch(setTotalUsersCount(response.data.totalCount)) //обновляем количество totalUsers
@@ -117,7 +118,7 @@ export const onPageChanged = (pageNumber: number, pageSize: number) => {
     return (dispatch: any) => {
         dispatch(setCurrentPage(pageNumber));
         dispatch(toggleIsFetching(true));
-        usersAPI.getUsers(pageNumber, pageSize).then(data => {
+        usersAPI.requestUsers(pageNumber, pageSize).then(data => {
             dispatch(toggleIsFetching(false))
             dispatch(setUsers(data.items))
         });

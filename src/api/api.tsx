@@ -28,7 +28,7 @@ export const authAPI = {
 }
 
 export const usersAPI = {
-    getUsers(currentPage: number, pageSize: number) {
+    requestUsers(currentPage: number, pageSize: number) {
         return instance.get<DataUsersPropsType>(`users?page=${currentPage}&count=${pageSize}`).then(response => response.data);
     },
     follow(userId: number) {

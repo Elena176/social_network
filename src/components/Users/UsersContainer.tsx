@@ -13,6 +13,14 @@ import {UsersFunctionComponent} from './UsersFunctionComponent';
 import {Preloader} from '../common/Preloader/Preloader';
 import {compose} from 'redux';
 import {UserType} from '../../redux/Types';
+import {
+    getCurrentPage,
+    getFollowingInProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers
+} from '../../redux/users-selectors';
 
 class UsersContainer extends React.Component <UsersPropsType> {
     componentDidMount() {
@@ -39,7 +47,7 @@ this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize);
     }
 }
 
-let mapStateToProps = (state: AppStateType) => {
+/*let mapStateToProps = (state: AppStateType) => {
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
@@ -47,6 +55,17 @@ let mapStateToProps = (state: AppStateType) => {
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
         followingInProgress: state.usersPage.followingInProgress,
+    }
+}*/
+
+let mapStateToProps = (state: AppStateType) => {
+    return {
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state),
     }
 }
 

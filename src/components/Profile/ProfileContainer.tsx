@@ -11,6 +11,7 @@ import {ProfileUserType} from '../../redux/Types';
 class ProfileContainer extends React.Component<ProfilePropsType> {
 
     componentDidMount() {
+
         let userId = this.props.match.params.userId;
         if (!userId) {
             userId = String(this.props.authorizedUserId);
@@ -18,9 +19,8 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
                 this.props.history.push('/login')
             }
         }
-
-        this.props.getUserStatus(userId);
         this.props.getProfile(userId)
+        this.props.getUserStatus(userId);
     }
 
     render() {
