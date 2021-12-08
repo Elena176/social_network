@@ -6,31 +6,30 @@ import {Field, Form, Formik} from 'formik';
 import {validateItem} from '../../../utils/validators/validators';
 import {Textarea} from '../../common/FormsControl/FormsControl';
 
-const validateAddPostMessageForm = validateItem(50) ;
+const validateAddPostMessageForm = validateItem(50);
 
-class MyPosts extends React.Component<MyPostsPropsType> {
-    render() {
-        console.log('render')
-        const postsElement = this.props.posts.map(p => <Post message={p.message}
-                                                             likeValue={p.likeValue}/>);
+const MyPosts: React.FC<MyPostsPropsType> = React.memo(props => {
+    const postsElement = props.posts.map(p => <Post message={p.message}
+                                                    likeValue={p.likeValue}
+                                                    key={p.id}/>);
 
-        const addNewPost = (value: FormNewPostType) => {
-            this.props.addPost(value.newPostText)
-        }
-
-        return (
-            <div className={s.postsBlock}>
-                <h3>My posts</h3>
-                <div>
-                    <AddPostFormFormik addNewPost={addNewPost}/>
-                </div>
-                <div className={s.posts}>
-                    {postsElement}
-                </div>
-            </div>
-        )
+    const addNewPost = (value: FormNewPostType) => {
+        props.addPost(value.newPostText)
     }
-}
+
+    return (
+        <div className={s.postsBlock}>
+            <h3>My posts</h3>
+            <div>
+                <AddPostFormFormik addNewPost={addNewPost}/>
+            </div>
+            <div className={s.posts}>
+                {postsElement}
+            </div>
+        </div>
+    )
+});
+
 
 type AddPostPropsType = {
     addNewPost: (value: FormNewPostType) => void
@@ -51,9 +50,9 @@ export const AddPostFormFormik = (props: AddPostPropsType) => {
                     <div>
                         <Field
                             component={Textarea}
-                               validate={validateAddPostMessageForm}
-                               name={'newPostText'}
-                               placeholder={'Enter your text'}
+                            validate={validateAddPostMessageForm}
+                            name={'newPostText'}
+                            placeholder={'Enter your text'}
                         />
                     </div>
 
