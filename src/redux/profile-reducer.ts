@@ -51,24 +51,26 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionTy
                 status: action.status
             }
         }
+        case 'DELETE-POST': {
+            return {
+                ...state,
+                posts: state.posts.filter(p => p.id !== action.postId)
+            }
+        }
         default:
             return state;
 
     }
 }
 
-export const addPostActionCreator = (newPostText: string) => {
-    return {type: 'ADD-POST', newPostText} as const
-}
-
+export const addPostActionCreator = (newPostText: string) => ({type: 'ADD-POST', newPostText} as const)
 export const setUserProfile = (profile: ProfileUserType) => {
     return {type: 'SET-USER-PROFILE', profile} as const
 }
-
-
 export const setStatus = (status: string) => {
     return {type: 'SET-STATUS', status} as const
 }
+export const deletePostAC = (postId: number) => ({type: 'DELETE-POST', postId} as const);
 
 export const getProfile = (userId: string) => {
     return (dispatch: Dispatch<ActionTypes>) => {
