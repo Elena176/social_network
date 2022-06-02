@@ -19,7 +19,6 @@ export const Textarea = ({field, form: {touched, errors, isValid}, ...props}: an
 }
 
 export const Input = ({field, form: {touched, errors, isValid}, ...props}: any) => {
-
   return (
     <div>
       <input
