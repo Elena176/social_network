@@ -4,17 +4,18 @@ import MyPostsContainer from './My posts/MyPostsContainer';
 import {ProfileUserType} from '../../redux/Types';
 
 type ProfilePropsType = {
-    profile: ProfileUserType
-    status: string
-    updateUserStatus: (status: string) => void
+  profile: ProfileUserType
+  status: string
+  updateUserStatus: (status: string) => void
 }
-const Profile = (props: ProfilePropsType) => {
-    return (
-        <div>
-            <ProfileInfo profile={props.profile} status={props.status} updateUserStatus={props.updateUserStatus}/>
-            <MyPostsContainer/>
-        </div>
-    )
+const Profile = ({profile, updateUserStatus, status}: ProfilePropsType) => {
+  return (
+    <div>
+      <ProfileInfo profile={profile}
+                   status={status} updateUserStatus={updateUserStatus}/>
+      <MyPostsContainer/>
+    </div>
+  )
 }
 
 export default Profile;
