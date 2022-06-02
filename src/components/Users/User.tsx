@@ -45,7 +45,6 @@ export let User: React.FC<UserPropsType> = ({user, followingInProgress, unFollow
                     </span>*/}
     </span>
       </div>
-      )
     </div>
   )
 }
