@@ -1,5 +1,6 @@
 import React from 'react';
-import {MainApp} from './App';
+import { render, screen } from '@testing-library/react';
+import MainApp from './App';
 import ReactDOM from 'react-dom';
 
 test('renders without crashing', () => {
@@ -7,3 +8,8 @@ test('renders without crashing', () => {
   ReactDOM.render(<MainApp/>, div)
   ReactDOM.unmountComponentAtNode(div)
 })
+test.skip('renders learn react link', () => {
+  render(<MainApp />);
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
+});

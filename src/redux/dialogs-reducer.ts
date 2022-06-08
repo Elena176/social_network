@@ -10,12 +10,12 @@ type MessageType = {
     id: number,
     message: string
 }
-export type InitialStateType = {
+export type InitialDialogStateType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
 }
 
-let initialState: InitialStateType = {
+let initialState: InitialDialogStateType = {
     dialogs: [
         {id: 1, name: 'Elena'},
         {id: 2, name: 'Denis'},
@@ -37,7 +37,7 @@ let initialState: InitialStateType = {
 }
 
 
-const dialogsReducer = (state: InitialStateType = initialState, action: ActionTypes): InitialStateType => {
+const dialogsReducer = (state: InitialDialogStateType = initialState, action: ActionTypes): InitialDialogStateType => {
     let stateCopy = {
         ...state,
         //messages: [...state.messages];

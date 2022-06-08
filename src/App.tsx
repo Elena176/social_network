@@ -50,19 +50,29 @@ const mapStateToProps = (state: AppStateType) => {
   return {
     initialized: state.app.initialized,
   }
-};
+}
 
-let AppContainer = compose<React.ComponentType>(
+const AppContainer = compose<React.ComponentType>(
   withRouter,
   connect<MapStatePropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {initializeApp}))(App);
 
-export const MainApp = () => {
-  return <BrowserRouter>
-    <Provider store={store}>
-      <AppContainer/>
-    </Provider>
-  </BrowserRouter>
+// @ts-ignore
+const MainApp = () => {
+  return (
+    <>
+      {// @ts-ignore
+      <BrowserRouter>
+        {// @ts-ignore
+        <Provider store={store}>
+         <AppContainer />
+        </Provider>}
+      </BrowserRouter>}
+    </>
+  )
 }
+
+
+export default MainApp;
 
 //types
 type MapStatePropsType = {

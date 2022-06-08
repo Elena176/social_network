@@ -12,14 +12,14 @@ export type PostType = {
   likeValue: number
 }
 
-export type InitialStateType = {
+export type InitialProfileStateType = {
   posts: Array<PostType>
   profile: ProfileUserType
   status: string
 }
 
 
-let initialState: InitialStateType = {
+let initialState: InitialProfileStateType = {
   posts: [
     {id: 1, message: 'Hi, how are you?', likeValue: 15},
     {id: 2, message: 'It\'s my first post.', likeValue: 10},
@@ -30,7 +30,7 @@ let initialState: InitialStateType = {
   status: '',
 }
 
-const profileReducer = (state: InitialStateType = initialState, action: ActionTypes): InitialStateType => {
+const profileReducer = (state: InitialProfileStateType = initialState, action: ActionTypes): InitialProfileStateType => {
 
   switch (action.type) {
     case ADD_POST: {
