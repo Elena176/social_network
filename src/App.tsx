@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {HashRouter, Redirect, Route, Switch} from 'react-router-dom';
 import Settings from './components/Settings/Settings';
 import UsersContainer from './components/Users/UsersContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
@@ -34,6 +34,9 @@ class App extends React.Component<AppPropsType> {
         <HeaderContainer/>
         <Navbar/>
         <div className="app-wrapper-content">
+          <Switch>
+            <Route exact path='/'
+                   render={() => <Redirect to={'/profile'}/>}/>
           <Route path="/profile/:userId?"
                  render={withSuspense(ProfileContainer)}/>
           <Route path="/dialogs"
@@ -43,6 +46,7 @@ class App extends React.Component<AppPropsType> {
           <Route path="/music" render={withSuspense(Music)}/>
           <Route path="/settings" render={() => <Settings/>}/>
           <Route path="/login" render={withSuspense(Login)}/>
+          </Switch>
         </div>
       </div>
     );
@@ -60,21 +64,19 @@ const AppContainer = compose<React.ComponentType>(
   connect<MapStatePropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {initializeApp}))(App);
 
 // @ts-ignore
-const MainApp = () => {
+const MainApp: React.FC = () => {
   return (
     <>
       {// @ts-ignore
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <HashRouter >
         {// @ts-ignore
         <Provider store={store}>
          <AppContainer />
         </Provider>}
-      </BrowserRouter>}
+      </HashRouter>}
     </>
   )
 }
-
-
 export default MainApp;
 
 //types
