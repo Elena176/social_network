@@ -1,27 +1,28 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import s from './Navbar.module.css';
+import {PATH} from '../../enum/routes/routes';
 
 function Navbar () {
     return (
         <nav className={s.nav}>
         <div className={s.item}>
-            <NavLink to='/profile' activeClassName={s.activeLink}>Profile</NavLink>
+            <NavLink to={PATH.PROFILE} activeClassName={s.activeLink}>Profile</NavLink>
         </div>
         <div className={`${s.item} ${s.active}`}>
-            <NavLink to='/dialogs' activeClassName={s.activeLink}>Messages</NavLink>
+            <NavLink to={PATH.DIALOGS} activeClassName={s.activeLink}>Messages</NavLink>
         </div>
             <div className={`${s.item} ${s.active}`}>
-                <NavLink to='/users' activeClassName={s.activeLink}>Users</NavLink>
+                <NavLink to={PATH.USERS} activeClassName={s.activeLink}>Users</NavLink>
             </div>
         <div className={s.item}>
-            <NavLink to='/news' activeClassName={s.activeLink}>News</NavLink>
+            <NavLink to={PATH.NEWS} activeClassName={s.activeLink}>News</NavLink>
         </div>
         <div className={s.item}>
-            <NavLink to='/music' activeClassName={s.activeLink}>Music</NavLink>
+            <NavLink to={PATH.MUSIC} activeClassName={s.activeLink}>Music</NavLink>
         </div>
         <div className={s.item}>
-            <NavLink to='/settings' activeClassName={s.activeLink}>Settings</NavLink>
+            <NavLink to={PATH.SETTINGS} activeClassName={s.activeLink}>Settings</NavLink>
         </div>
     </nav>
     )

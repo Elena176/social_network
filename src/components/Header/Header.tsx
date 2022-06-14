@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import s from './Header.module.css';
+import {PATH} from '../../enum/routes/routes';
 
 type HeaderTypeProps = {
     isAuth: boolean
@@ -18,7 +19,7 @@ function Header (props: HeaderTypeProps) {
             <div className={s.loginBlock}>
                 {props.isAuth
                     ? <div>{props.login} - <button onClick={props.logOut}>LOG OUT</button></div>
-                : <NavLink to={'/login'}>Login</NavLink>}
+                : <NavLink to={PATH.LOGIN}>Login</NavLink>}
             </div>
     </header>
     )

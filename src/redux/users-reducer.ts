@@ -22,7 +22,7 @@ export type InitialStateUsersType = {
 let initialState: InitialStateUsersType = {
   users: [],
   pageSize: 5,
-  totalUsersCount: 150,
+  totalUsersCount: 1000,
   currentPage: 1,
   isFetching: true,
   followingInProgress: [],

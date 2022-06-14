@@ -12,6 +12,7 @@ import {compose} from 'redux';
 import {initializeApp} from './redux/app-reducer';
 import {Preloader} from './components/common/Preloader/Preloader';
 import {withSuspense} from './hoc/withSuspense';
+import {PATH} from './enum/routes/routes';
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'))
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'))
@@ -36,16 +37,16 @@ class App extends React.Component<AppPropsType> {
         <div className="app-wrapper-content">
           <Switch>
             <Route exact path='/'
-                   render={() => <Redirect to={'/profile'}/>}/>
+                   render={() => <Redirect to={PATH.PROFILE}/>}/>
           <Route path="/profile/:userId?"
                  render={withSuspense(ProfileContainer)}/>
-          <Route path="/dialogs"
+          <Route path={PATH.DIALOGS}
                  render={withSuspense(DialogsContainer)}/>
-          <Route path="/users" render={() => <UsersContainer/>}/>
-          <Route path="/news" render={withSuspense(News)}/>
-          <Route path="/music" render={withSuspense(Music)}/>
-          <Route path="/settings" render={() => <Settings/>}/>
-          <Route path="/login" render={withSuspense(Login)}/>
+          <Route path={PATH.USERS} render={() => <UsersContainer/>}/>
+          <Route path={PATH.NEWS} render={withSuspense(News)}/>
+          <Route path={PATH.MUSIC} render={withSuspense(Music)}/>
+          <Route path={PATH.SETTINGS} render={() => <Settings/>}/>
+          <Route path={PATH.LOGIN} render={withSuspense(Login)}/>
           </Switch>
         </div>
       </div>

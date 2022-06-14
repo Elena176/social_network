@@ -3,6 +3,7 @@ import {NavLink} from 'react-router-dom';
 import userPhoto from '../../assets/images/user.png';
 import s from './users.module.css';
 import {UserType} from '../../redux/Types';
+import { PATH } from '../../enum/routes/routes';
 
 type UserPropsType = {
   user: UserType
@@ -16,7 +17,7 @@ export let User: React.FC<UserPropsType> = ({user, followingInProgress, unFollow
       <div>
     <span>
       <div>
-        <NavLink to={'/profile/' + user.id}>
+        <NavLink to={PATH.PROFILE + user.id}>
     <img src={user.photos.small != null ? user.photos.small : userPhoto} alt={''}
          className={s.userPhoto}/>
   </NavLink>

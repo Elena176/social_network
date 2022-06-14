@@ -7,6 +7,7 @@ import {logIn} from '../redux/auth-reducer';
 import {Redirect} from 'react-router-dom';
 import {AppStateType} from '../redux/redux-store';
 import s from './../components/common/FormsControl/FormsControls.module.css';
+import {PATH} from '../enum/routes/routes';
 
 const validateLoginForm = validateItem(30)
 
@@ -45,7 +46,7 @@ const Login: React.FC<LoginPropsType> = ({isAuth, error, logIn}) => {
     logIn(formData.email, formData.password, formData.rememberMe)
   }
   if (isAuth) {
-    return <Redirect to={'/profile'}/>
+    return <Redirect to={PATH.PROFILE}/>
   }
   return <div>
     <h1>LOGIN</h1>

@@ -6,6 +6,7 @@ import {getProfile, getUserStatus, updateUserStatus} from '../../redux/profile-r
 import {RouteComponentProps, withRouter } from 'react-router';
 import {compose} from 'redux';
 import {ProfileUserType} from '../../redux/Types';
+import {PATH} from '../../enum/routes/routes';
 //import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 class ProfileContainer extends React.Component<ProfilePropsType> {
@@ -16,7 +17,7 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
         if (!userId) {
             userId = String(this.props.authorizedUserId);
             if (!userId) {
-                this.props.history.push('/login')
+                this.props.history.push(PATH.LOGIN)
             }
         }
         this.props.getProfile(userId)
