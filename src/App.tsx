@@ -64,7 +64,7 @@ const MainApp = () => {
   return (
     <>
       {// @ts-ignore
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         {// @ts-ignore
         <Provider store={store}>
          <AppContainer />
