@@ -7,12 +7,16 @@ type ProfilePropsType = {
   profile: ProfileUserType
   status: string
   updateUserStatus: (status: string) => void
+  isOwner: boolean
+  savePhoto: (file: File) => void
 }
-const Profile = ({profile, updateUserStatus, status}: ProfilePropsType) => {
+const Profile = ({profile, updateUserStatus, status, isOwner, savePhoto}: ProfilePropsType) => {
   return (
     <div>
-      <ProfileInfo profile={profile}
-                   status={status} updateUserStatus={updateUserStatus}/>
+      <ProfileInfo  isOwner={isOwner}
+        profile={profile}
+                   status={status} updateUserStatus={updateUserStatus}
+                    savePhoto={savePhoto}/>
       <MyPostsContainer/>
     </div>
   )

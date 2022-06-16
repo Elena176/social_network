@@ -2,7 +2,7 @@ import React from 'react';
 import Profile from './Profile';
 import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
-import {getProfile, getUserStatus, updateUserStatus} from '../../redux/profile-reducer';
+import {getProfile, getUserStatus, savePhoto, updateUserStatus} from '../../redux/profile-reducer';
 import {RouteComponentProps, withRouter } from 'react-router';
 import {compose} from 'redux';
 import {ProfileUserType} from '../../redux/Types';
@@ -10,9 +10,7 @@ import {PATH} from '../../enum/routes/routes';
 //import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 class ProfileContainer extends React.Component<ProfilePropsType> {
-
-    componentDidMount() {
-
+    refreshProfile() {
         let userId = this.props.match.params.userId;
         if (!userId) {
             userId = String(this.props.authorizedUserId);
@@ -24,10 +22,21 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
         this.props.getUserStatus(userId);
     }
 
+    componentDidMount() {
+        this.refreshProfile();
+    }
+    componentDidUpdate(prevProps: Readonly<ProfilePropsType>, prevState: Readonly<{}>, snapshot?: any) {
+        if (this.props.match.params.userId !== this.props.match.params.userId) {
+            this.refreshProfile();
+        }
+    }
+
     render() {
         return (
             /*раскукоживаем пропсы для Profile*/
-            <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateUserStatus={this.props.updateUserStatus}/>
+            <Profile {...this.props}
+                     isOwner={!this.props.match.params.userId} profile={this.props.profile} status={this.props.status} updateUserStatus={this.props.updateUserStatus}
+                     savePhoto={this.props.savePhoto}/>
         )
     }
 }
@@ -40,7 +49,7 @@ let mapStateToProps = (state: AppStateType) => ({
 });
 
 export default compose<React.ComponentType>(
-    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {getProfile, getUserStatus, updateUserStatus}),
+    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {getProfile, getUserStatus, updateUserStatus, savePhoto}),
     withRouter,
     //withAuthRedirect,
 )(ProfileContainer);
@@ -61,6 +70,7 @@ type MapDispatchToPropsType = {
     getProfile: (userId: string) => void
     getUserStatus: (userId: string) => void
     updateUserStatus: (status: string) => void
+    savePhoto: (file: File) => void
 }
 
 type PropsType = MapStateToPropsType & MapDispatchToPropsType;
