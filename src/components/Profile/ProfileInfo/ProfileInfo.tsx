@@ -4,6 +4,7 @@ import {Preloader} from '../../common/Preloader/Preloader';
 import {ProfileContactsType, ProfileUserType} from '../../../redux/Types';
 import ProfileStatusWithHooks from './ProfileStatusWithHook';
 import userPhoto from '../../../assets/images/user.png';
+import {ProfileDataForm} from './ProfileDataForm';
 
 type ProfileInfoPropsType = {
   profile: ProfileUserType
@@ -15,6 +16,7 @@ type ProfileInfoPropsType = {
 
 const ProfileInfo = ({profile, status, updateUserStatus, isOwner, savePhoto}: ProfileInfoPropsType) => {
   const [editMode, setEditMode] = useState<boolean>(false)
+  const [editForm, setEditForm] = useState<boolean>(false)
   if (!profile) {
     return <Preloader/>
   }
@@ -25,6 +27,9 @@ const ProfileInfo = ({profile, status, updateUserStatus, isOwner, savePhoto}: Pr
       const file = target.files[0]
       savePhoto(file)
     }
+  }
+  const goToEditMode = () => {
+    setEditForm(true)
   }
   return (
     <div>
@@ -47,25 +52,8 @@ const ProfileInfo = ({profile, status, updateUserStatus, isOwner, savePhoto}: Pr
 
         </div>
         {/*{isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}*/}
-        <div>
-          <b>Full name</b>: {profile.fullName}
-        </div>
-        <div>
-          <b>Looking for a job</b>: { profile.lookingForAJob ? 'yes' : 'no'}
-        </div>
-        {profile.lookingForAJob &&
-            <div>
-                <b>My professional skills</b>: {profile.lookingForAJobDescription}
-            </div>
-        }
-        <div>
-          <b>About me</b>: {profile.aboutMe}
-        </div>
-        <div>
-          <b>Contacts</b>: {Object.keys(profile.contacts).map(key => {
-           return <Contact contactTitle={key} contactValue={profile.contacts[key as keyof ProfileContactsType]}/>
-        })}
-        </div>
+        {editForm ? <ProfileDataForm /> : <ProfileData profile={profile} isOwner={isOwner} goToEditMode={goToEditMode}/>}
+
         {/* <ProfileStatus  status={props.status} updateUserStatus={props.updateUserStatus}/>*/}
         <ProfileStatusWithHooks status={status} updateUserStatus={updateUserStatus}/>
       </div>
@@ -77,9 +65,39 @@ type ContactPropsType = {
   contactTitle: string
   contactValue: string
 }
+type ProfileDataPropsType = {
+  profile: ProfileUserType
+  isOwner: boolean
+  goToEditMode: () => void
+}
+const ProfileData = ({profile, isOwner, goToEditMode}: any) => {
+  return <div>
+    {isOwner && <div><button onClick={goToEditMode}>Edit</button></div>}
+    <div>
+      <b>Full name</b>: {profile.fullName}
+    </div>
+    <div>
+      <b>Looking for a job</b>: {profile.lookingForAJob ? 'yes' : 'no'}
+    </div>
+    {
+      profile.lookingForAJob &&
+        <div>
+            <b>My professional skills</b>: {profile.lookingForAJobDescription}
+        </div>
+    }
+    <div>
+      <b>About me</b>: {profile.aboutMe}
+    </div>
+    <div>
+      <b>Contacts</b>: {Object.keys(profile.contacts).map(key => {
+      return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key as keyof ProfileContactsType]}/>
+    })}
+    </div>
+  </div>
+}
 
-const Contact: React.FC<ContactPropsType> = ({contactTitle, contactValue}) => {
-  return <div><b>{contactTitle}</b>: {contactValue}</div>
+export const Contact: React.FC<ContactPropsType> = ({contactTitle, contactValue}) => {
+  return <div className={s.contact}><b>{contactTitle}</b>: {contactValue}</div>
 }
 
 export default ProfileInfo;
