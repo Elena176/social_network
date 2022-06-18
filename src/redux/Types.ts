@@ -28,21 +28,23 @@ export type UserType = {
     }
 }
 
+export type ProfileContactsType = {
+    github: string
+    vk: string
+    facebook: string
+    instagram: string
+    twitter: string
+    website: string
+    youtube: string
+    mainLink: string
+}
 export type ProfileUserType = null | {
     id: number
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
-    contacts: {
-        github: string
-        vk: string
-        facebook: string
-        instagram: string
-        twitter: string
-        website: string
-        youtube: string
-        mainLink: string
-    }
+    aboutMe: string
+    contacts: ProfileContactsType
     photos: {
         small: string
         large: string

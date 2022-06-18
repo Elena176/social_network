@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import s from './ProfileInfo.module.css';
 import {Preloader} from '../../common/Preloader/Preloader';
-import {ProfileUserType} from '../../../redux/Types';
+import {ProfileContactsType, ProfileUserType} from '../../../redux/Types';
 import ProfileStatusWithHooks from './ProfileStatusWithHook';
 import userPhoto from '../../../assets/images/user.png';
 
@@ -47,12 +47,39 @@ const ProfileInfo = ({profile, status, updateUserStatus, isOwner, savePhoto}: Pr
 
         </div>
         {/*{isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}*/}
-        {profile.fullName}
+        <div>
+          <b>Full name</b>: {profile.fullName}
+        </div>
+        <div>
+          <b>Looking for a job</b>: { profile.lookingForAJob ? 'yes' : 'no'}
+        </div>
+        {profile.lookingForAJob &&
+            <div>
+                <b>My professional skills</b>: {profile.lookingForAJobDescription}
+            </div>
+        }
+        <div>
+          <b>About me</b>: {profile.aboutMe}
+        </div>
+        <div>
+          <b>Contacts</b>: {Object.keys(profile.contacts).map(key => {
+           return <Contact contactTitle={key} contactValue={profile.contacts[key as keyof ProfileContactsType]}/>
+        })}
+        </div>
         {/* <ProfileStatus  status={props.status} updateUserStatus={props.updateUserStatus}/>*/}
         <ProfileStatusWithHooks status={status} updateUserStatus={updateUserStatus}/>
       </div>
     </div>
   )
+}
+
+type ContactPropsType = {
+  contactTitle: string
+  contactValue: string
+}
+
+const Contact: React.FC<ContactPropsType> = ({contactTitle, contactValue}) => {
+  return <div><b>{contactTitle}</b>: {contactValue}</div>
 }
 
 export default ProfileInfo;
