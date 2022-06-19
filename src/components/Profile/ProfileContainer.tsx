@@ -2,11 +2,12 @@ import React from 'react';
 import Profile from './Profile';
 import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
-import {getProfile, getUserStatus, savePhoto, updateUserStatus} from '../../redux/profile-reducer';
+import {getProfile, getUserStatus, savePhoto, saveProfile, updateUserStatus, Values} from '../../redux/profile-reducer';
 import {RouteComponentProps, withRouter } from 'react-router';
 import {compose} from 'redux';
 import {ProfileUserType} from '../../redux/Types';
 import {PATH} from '../../enum/routes/routes';
+
 //import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 class ProfileContainer extends React.Component<ProfilePropsType> {
@@ -36,7 +37,8 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
             /*раскукоживаем пропсы для Profile*/
             <Profile {...this.props}
                      isOwner={!this.props.match.params.userId} profile={this.props.profile} status={this.props.status} updateUserStatus={this.props.updateUserStatus}
-                     savePhoto={this.props.savePhoto}/>
+                     savePhoto={this.props.savePhoto}
+                     saveProfile={this.props.saveProfile}/>
         )
     }
 }
@@ -49,7 +51,7 @@ let mapStateToProps = (state: AppStateType) => ({
 });
 
 export default compose<React.ComponentType>(
-    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {getProfile, getUserStatus, updateUserStatus, savePhoto}),
+    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {getProfile, getUserStatus, updateUserStatus, savePhoto, saveProfile}),
     withRouter,
     //withAuthRedirect,
 )(ProfileContainer);
@@ -71,6 +73,7 @@ type MapDispatchToPropsType = {
     getUserStatus: (userId: string) => void
     updateUserStatus: (status: string) => void
     savePhoto: (file: File) => void
+    saveProfile: (formData: Values) => void
 }
 
 type PropsType = MapStateToPropsType & MapDispatchToPropsType;

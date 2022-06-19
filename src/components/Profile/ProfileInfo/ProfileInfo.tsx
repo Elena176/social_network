@@ -5,6 +5,7 @@ import {ProfileContactsType, ProfileUserType} from '../../../redux/Types';
 import ProfileStatusWithHooks from './ProfileStatusWithHook';
 import userPhoto from '../../../assets/images/user.png';
 import {ProfileDataForm} from './ProfileDataForm';
+import {Values} from '../../../redux/profile-reducer';
 
 type ProfileInfoPropsType = {
   profile: ProfileUserType
@@ -12,9 +13,10 @@ type ProfileInfoPropsType = {
   updateUserStatus: (status: string) => void
   isOwner: boolean
   savePhoto: (file: File) => void
+  saveProfile: (formData: Values) => void
 }
 
-const ProfileInfo = ({profile, status, updateUserStatus, isOwner, savePhoto}: ProfileInfoPropsType) => {
+const ProfileInfo = ({profile, status, updateUserStatus, isOwner, savePhoto, saveProfile}: ProfileInfoPropsType) => {
   const [editMode, setEditMode] = useState<boolean>(false)
   const [editForm, setEditForm] = useState<boolean>(false)
   if (!profile) {
@@ -30,6 +32,9 @@ const ProfileInfo = ({profile, status, updateUserStatus, isOwner, savePhoto}: Pr
   }
   const goToEditMode = () => {
     setEditForm(true)
+  }
+  const onSubmit = (formData: Values) => {
+    saveProfile(formData)
   }
   return (
     <div>
@@ -52,7 +57,7 @@ const ProfileInfo = ({profile, status, updateUserStatus, isOwner, savePhoto}: Pr
 
         </div>
         {/*{isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}*/}
-        {editForm ? <ProfileDataForm /> : <ProfileData profile={profile} isOwner={isOwner} goToEditMode={goToEditMode}/>}
+        {editForm ? <ProfileDataForm profile={profile} onSubmit={onSubmit}/> : <ProfileData profile={profile} isOwner={isOwner} goToEditMode={goToEditMode}/>}
 
         {/* <ProfileStatus  status={props.status} updateUserStatus={props.updateUserStatus}/>*/}
         <ProfileStatusWithHooks status={status} updateUserStatus={updateUserStatus}/>

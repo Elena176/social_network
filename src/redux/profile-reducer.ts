@@ -7,18 +7,27 @@ const SET_USER_PROFILE = 'profile/SET-USER-PROFILE'
 const SET_STATUS = 'profile/SET-STATUS'
 const DELETE_POST = 'profile/DELETE-POST'
 const SAVE_PHOTO_SUCCESS = 'profile/SAVE_PHOTO_SUCCESS'
+const SAVE_PROFILE = 'profile/SAVE_PROFILE'
+
 export type PostType = {
   id: number
   message: string
   likeValue: number
 }
 
+export type Values = {
+  fullName: string;
+  lookingForAJobDescription: string;
+  aboutMe: string;
+  lookingForAJob: boolean
+}
+
 export type InitialProfileStateType = {
   posts: Array<PostType>
   profile: ProfileUserType
   status: string
+  formData:  Values
 }
-
 
 let initialState: InitialProfileStateType = {
   posts: [
@@ -27,8 +36,14 @@ let initialState: InitialProfileStateType = {
     {id: 3, message: 'Where are you?', likeValue: 10},
     {id: 4, message: 'Hi!', likeValue: 50}
   ],
-  profile: null,
+  profile: null as ProfileUserType | null,
   status: '',
+  formData: {
+    fullName: '',
+    lookingForAJobDescription: '',
+    aboutMe: '',
+    lookingForAJob: false
+  }
 }
 
 const profileReducer = (state: InitialProfileStateType = initialState, action: ActionTypes): InitialProfileStateType => {
@@ -71,6 +86,12 @@ const profileReducer = (state: InitialProfileStateType = initialState, action: A
           photos: action.photos} as ProfileUserType
       }
     }
+    case SAVE_PROFILE: {
+      return {
+        ...state,
+        formData: action.formData
+      }
+    }
     default:
       return state;
 
@@ -82,6 +103,7 @@ export const setUserProfile = (profile: ProfileUserType) => ({type: SET_USER_PRO
 export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
 export const deletePostAC = (postId: number) => ({type: DELETE_POST, postId} as const);
 export const savePhotoSuccess = (photos: any) => ({type: SAVE_PHOTO_SUCCESS, photos} as const)
+export const saveProfileSuccess = (formData: Values) => ({type: SAVE_PROFILE, formData} as const)
 
 //запрос на получение профайла user
 export const getProfile = (userId: string) => async (dispatch: Dispatch<ActionTypes>) => {
@@ -104,6 +126,14 @@ export const savePhoto = (file: any) => async (dispatch: Dispatch<ActionTypes>) 
   const response = await profileAPI.savePhoto(file)
   if (response.data.resultCode === 0) {
     dispatch(savePhotoSuccess(response.data.data.photos))
+  }
+};
+
+export const saveProfile = (formData: Values) => async (dispatch: Dispatch<ActionTypes>) => {
+  const response = await profileAPI.saveProfile(formData)
+  debugger;
+  if (response.data.resultCode === 0) {
+    dispatch(saveProfileSuccess(response.data.data))
   }
 };
 export default profileReducer;
