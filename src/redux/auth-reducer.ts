@@ -45,9 +45,9 @@ const authReducer = (state: InitialStateDataType = initialState, action: ActionT
   }
 }
 
-export const setAuthUserData = (id: number | null, login: string | null, email: string | null, isAuth: boolean) => ({
+export const setAuthUserData = (id: number | null, login: string | null, email: string | null, isAuth: boolean, captchaUrl: null | string) => ({
   type: SET_USER_DATA,
-  payload: {id, login, email, isAuth}
+  payload: {id, login, email, isAuth, captchaUrl}
 } as const)
 
 export const setErrorMessage = (error: string | null) => ({type: SET_ERROR_MESSAGE, error} as const)
@@ -60,7 +60,7 @@ export const getAuthUserData = () => async (dispatch: ThunkDispatch<AppStateType
   let response = await authAPI.me();
   if (response.data.resultCode === 0) {                     //проверка залогинен пользователь или нет
     let {id, login, email} = response.data.data
-    dispatch(setAuthUserData(id, login, email, true));
+    dispatch(setAuthUserData(id, login, email, true, ''));
   }
 }
 
@@ -85,7 +85,7 @@ export const getCaptchaUrl = () => async (dispatch: ThunkDispatch<AppStateType, 
 export const logOut = () => async (dispatch: ThunkDispatch<AppStateType, undefined, ActionTypes>) => {
   let response = await authAPI.logout();
   if (response.data.resultCode === 0) {
-    dispatch(setAuthUserData(null, null, null, false))
+    dispatch(setAuthUserData(null, null, null, false, null))
   }
 }
 
