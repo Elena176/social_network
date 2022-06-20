@@ -21,14 +21,19 @@ export const authAPI = {
   me() {
     return instance.get<DataLoginPropsType>(`auth/me`);
   },
-  login(email: string, password: string, rememberMe: boolean) {
-    return instance.post<any>(`auth/login`, {email, password, rememberMe});
+  login(email: string, password: string, rememberMe: boolean, captcha: null | string) {
+    return instance.post<any>(`auth/login`, {email, password, rememberMe, captcha});
   },
   logout() {
     return instance.delete<any>(`auth/login`);
   },
-}
+};
 
+export const securityAPI = {
+  getCaptchaURL() {
+    return instance.get('/security/get-captcha-url')
+  }
+}
 export const usersAPI = {
   requestUsers(currentPage: number, pageSize: number) {
     return instance.get<DataUsersPropsType>(`users?page=${currentPage}&count=${pageSize}`).then(response => response.data);

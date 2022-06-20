@@ -2,7 +2,7 @@ import {
     addPostActionCreator,
     deletePostAC,
     savePhotoSuccess,
-    saveProfile, saveProfileSuccess,
+    saveProfileSuccess,
     setStatus,
     setUserProfile
 } from './profile-reducer';
@@ -15,7 +15,7 @@ import {
     toggleIsFetching, toggleIsFollowingProgress,
     unfollowSuccess
 } from './users-reducer';
-import {setAuthUserData, setErrorMessage} from './auth-reducer';
+import {getCaptchaUrlSuccess, setAuthUserData, setErrorMessage} from './auth-reducer';
 import {initializedSuccess} from './app-reducer';
 
 type locationPropsType = {
@@ -111,3 +111,4 @@ export type ActionTypes = ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof deletePostAC>
     | ReturnType<typeof savePhotoSuccess>
     | ReturnType<typeof saveProfileSuccess>
+    | ReturnType<typeof getCaptchaUrlSuccess>

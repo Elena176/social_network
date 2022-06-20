@@ -1,6 +1,8 @@
 import {profileAPI} from '../api/api';
 import {Dispatch} from 'redux';
 import {ActionTypes, ProfileUserType} from './Types';
+import {ThunkDispatch} from 'redux-thunk';
+import {AppStateType} from './redux-store';
 
 const ADD_POST = 'profile/ADD-POST'
 const SET_USER_PROFILE = 'profile/SET-USER-PROFILE'
@@ -36,7 +38,7 @@ let initialState: InitialProfileStateType = {
     {id: 3, message: 'Where are you?', likeValue: 10},
     {id: 4, message: 'Hi!', likeValue: 50}
   ],
-  profile: null as ProfileUserType | null,
+  profile: null ,
   status: '',
   formData: {
     fullName: '',
@@ -129,11 +131,12 @@ export const savePhoto = (file: any) => async (dispatch: Dispatch<ActionTypes>) 
   }
 };
 
-export const saveProfile = (formData: Values) => async (dispatch: Dispatch<ActionTypes>) => {
+export const saveProfileTC = (formData: Values) => async (dispatch: ThunkDispatch<AppStateType, undefined, ActionTypes>, getState: any) => {
+  let userId = getState().auth.id
   const response = await profileAPI.saveProfile(formData)
   debugger;
   if (response.data.resultCode === 0) {
-    dispatch(saveProfileSuccess(response.data.data))
+    return dispatch(getProfile(userId))
   }
 };
 export default profileReducer;

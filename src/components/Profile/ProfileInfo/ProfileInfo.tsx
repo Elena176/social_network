@@ -5,7 +5,7 @@ import {ProfileContactsType, ProfileUserType} from '../../../redux/Types';
 import ProfileStatusWithHooks from './ProfileStatusWithHook';
 import userPhoto from '../../../assets/images/user.png';
 import {ProfileDataForm} from './ProfileDataForm';
-import {Values} from '../../../redux/profile-reducer';
+import {saveProfileTC, Values} from '../../../redux/profile-reducer';
 
 type ProfileInfoPropsType = {
   profile: ProfileUserType
@@ -16,7 +16,7 @@ type ProfileInfoPropsType = {
   saveProfile: (formData: Values) => void
 }
 
-const ProfileInfo = ({profile, status, updateUserStatus, isOwner, savePhoto, saveProfile}: ProfileInfoPropsType) => {
+const ProfileInfo = ({profile, status, updateUserStatus, isOwner, savePhoto}: ProfileInfoPropsType) => {
   const [editMode, setEditMode] = useState<boolean>(false)
   const [editForm, setEditForm] = useState<boolean>(false)
   if (!profile) {
@@ -33,8 +33,9 @@ const ProfileInfo = ({profile, status, updateUserStatus, isOwner, savePhoto, sav
   const goToEditMode = () => {
     setEditForm(true)
   }
-  const onSubmit = (formData: Values) => {
-    saveProfile(formData)
+  const onSubmit = async (formData: Values) => {
+    await saveProfileTC(formData)
+    setEditForm(false)
   }
   return (
     <div>
@@ -57,9 +58,8 @@ const ProfileInfo = ({profile, status, updateUserStatus, isOwner, savePhoto, sav
 
         </div>
         {/*{isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}*/}
-        {editForm ? <ProfileDataForm profile={profile} onSubmit={onSubmit}/> : <ProfileData profile={profile} isOwner={isOwner} goToEditMode={goToEditMode}/>}
-
-        {/* <ProfileStatus  status={props.status} updateUserStatus={props.updateUserStatus}/>*/}
+        {editForm ? <ProfileDataForm values={profile} onSubmit={onSubmit} profile={profile}/> :
+          <ProfileData profile={profile} isOwner={isOwner} goToEditMode={goToEditMode}/>}
         <ProfileStatusWithHooks status={status} updateUserStatus={updateUserStatus}/>
       </div>
     </div>
@@ -70,14 +70,12 @@ type ContactPropsType = {
   contactTitle: string
   contactValue: string
 }
-type ProfileDataPropsType = {
-  profile: ProfileUserType
-  isOwner: boolean
-  goToEditMode: () => void
-}
+
 const ProfileData = ({profile, isOwner, goToEditMode}: any) => {
   return <div>
-    {isOwner && <div><button onClick={goToEditMode}>Edit</button></div>}
+    {isOwner && <div>
+        <button onClick={goToEditMode}>Edit</button>
+    </div>}
     <div>
       <b>Full name</b>: {profile.fullName}
     </div>
