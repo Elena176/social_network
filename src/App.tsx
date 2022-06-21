@@ -20,7 +20,6 @@ const Login = React.lazy(() => import('./Login/Login'))
 const News = React.lazy(() => import('./components/News/News'))
 const Music = React.lazy(() => import('./components/Music/Music'))
 
-
 class App extends React.Component<AppPropsType> {
   componentDidMount() {
     this.props.initializeApp();
@@ -47,6 +46,7 @@ class App extends React.Component<AppPropsType> {
           <Route path={PATH.MUSIC} render={withSuspense(Music)}/>
           <Route path={PATH.SETTINGS} render={() => <Settings/>}/>
           <Route path={PATH.LOGIN} render={withSuspense(Login)}/>
+            <Route path='*' render={() => <div>404 NOT FOUND</div>}/>
           </Switch>
         </div>
       </div>
@@ -69,7 +69,7 @@ const MainApp: React.FC = () => {
   return (
     <>
       {// @ts-ignore
-      <HashRouter >
+      <HashRouter>
         {// @ts-ignore
         <Provider store={store}>
          <AppContainer />
